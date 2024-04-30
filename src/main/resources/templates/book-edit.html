@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="hf/head.html :: head">
+  <title>Редактирование книги</title>
+</head>
+<body>
+<header th:insert="hf/header.html :: header"></header>
+<div class="container mt-5 mb-5">
+  <h1>Редактирование книги</h1>
+  <input class="alert alert-info mt-2" type="text" th:value="${result}">
+  <div th:each="el : ${book}">
+    <form method="post">
+      <input type="text" th:value="${el.name}" name="name" placeholder="Введите название" class="form-control">
+      <input type="text" th:value="${#dates.format(el.publication, 'dd.MM.yyyy')}" name="publication" placeholder="Введите дату публикации" class="form-control">
+      <input type="text" th:value="${el.genre}" name="genre" placeholder="Введите жанр" class="form-control">
+      <select name="author" >
+        <option th:each="author : ${authors}" th:value="${author.authorId}" th:text="${author.fullName}"></option>
+      </select>
+      <button type="submit" class="btn btn-success">Обновить</button>
+    </form>
+  </div>
+</div>
+<footer th:insert="hf/footer.html :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:insert="hf/head.html :: head">
+    <title>Книги</title>
+</head>
+
+<body>
+
+<header th:insert="hf/header.html :: header"></header>
+
+<div class="container mt-5">
+    <h1>Книги</h1>
+    <div sec:authorize="isAuthenticated()">
+        Authenticated as <span sec:authentication="name"></span>
+        <p th:text="${#authentication}"/>
+    </div>
+    <a sec:authorize="hasAuthority('EDITOR')" th:href="'/library/book/add'" class="btn btn-warning">Добавить книгу</a>
+    <div th:each="book : ${books}" class="alert alert-info mt-2">
+        <p th:text="${book.name}"/>
+        <p th:text="${book.genre}"/>
+        <a th:href="'/library/book/' + ${book.bookId}" class="btn btn-warning">Подробнее</a>
+        <p th:each="auth : ${userinfo}" th:text="auth"></p>
+        <p th:each="user : ${users}" th:if="NULL != ${book.user}" th:unless="${user} == ${book.user}">Нет в наличии</p>
+        <form th:if="NULL == ${book.user}" action="#" th:action="'/library/book/'+${book.bookId}+'/addBook'" method="post">
+            <button name="action" th:value="userAddBook" type="submit" class="btn btn-success">Взять книгу</button>
+        </form>
+        <form th:each="user : ${users}" th:if="${user} == ${book.user}" action="#" th:action="'/library/book/'+${book.bookId}+'/returnBook'" method="post">
+            <button name="action" th:value="userAddBook" type="submit" class="btn btn-success">Вернуть книгу</button>
+        </form>
+<!--        <button th:attr="data-book-id=${book.bookId}" onclick="takeBook(this.getAttribute('data-book-id'))">Взять книгу</button>-->
+    </div>
+
+<!--        <a th:if="${book.user == null}" th:href="${book.user.usersId} + '/take/' + ${book.bookId}" class="btn btn-warning">Взять книгу</a>-->
+
+
+</div>
+<footer th:insert="hf/footer.html :: footer"></footer>
+</body>
+</html>

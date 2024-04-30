@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:insert="hf/head.html :: head">
+    <title>Авторы</title>
+</head>
+<body>
+<header th:insert="hf/header.html :: header"></header>
+
+<div class="container mt-5">
+    <h1>Авторы</h1>
+    <div sec:authorize="hasAuthority('EDITOR')">
+        <a th:href="'/library/author/add'" class="btn btn-warning">Добавить автора</a>
+    </div>
+    <div th:each="el : ${authors}" class="alert alert-info mt-2">
+        <p th:text="${el.fullName}"/>
+        <a th:href="'/library/author/' + ${el.authorId}" class="btn btn-warning">Подробнее</a>
+    </div>
+</div>
+<footer th:insert="hf/footer.html :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+            <span class="fs-4">Library</span>
+        </a>
+
+        <div sec:authorize="isAuthenticated" class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/library/author">Author</a>
+            <a sec:authorize="hasAuthority('EDITOR')" class="me-3 py-2 link-body-emphasis text-decoration-none"
+               href="/library/user">User</a>
+            <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/library/book">Book</a>
+        </div>
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <ul class="navbar-nav"
+                th:switch="${#authentication} ? ${#authorization.expression('isAuthenticated()')} : ${false}">
+                <li class="nav-item pull-sm-0">
+                    <span th:case="${false}">
+                            <a class="nav-link btn btn-outline-primary" href="/login">Login</a>
+                    </span>
+                    <span th:case="${true}">
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn btn-outline-primary" type="submit" value="Logout"/>
+                        </form>
+                    </span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
