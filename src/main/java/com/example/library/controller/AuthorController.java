@@ -22,10 +22,18 @@ public class  AuthorController {
     @Autowired
     AuthorService authorService;
 
+
+
     @GetMapping("/author")
-    public String getAllAuthors(Model model) {
-        List<Author> authors = authorService.findAll();
-        model.addAttribute("authors", authors);
+    public String getAllAuthors(Model model, String keyword) {
+
+
+        if(keyword != null) {
+            model.addAttribute("authors", authorService.findbyKeyword(keyword));
+        }
+        else {
+            model.addAttribute("authors", authorService.findAll());
+        }
         return "author-main";
     }
 

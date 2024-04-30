@@ -52,4 +52,8 @@ public class AuthorServiceImpl implements AuthorService {
         }
         return false;
     }
+
+    public List<Author> findbyKeyword(String keyword) {
+        return authorRepository.findByKeyword(keyword);
+    }
 }

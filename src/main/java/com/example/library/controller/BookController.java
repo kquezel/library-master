@@ -35,17 +35,23 @@ public class BookController {
     UsersService usersService;
 
     @GetMapping("/book")
-    public String getAllBooks(Model model, Principal principal) {
+    public String getAllBooks(Model model, Principal principal, String keyword) {
         User user = usersService.findUser(principal.getName());
         List<Book> books = bookService.findAll();
         model.addAttribute("users", user);
-        model.addAttribute("books", books);
         books.sort(new Comparator<Book>() {
             @Override
             public int compare(Book s1, Book s2) {
                 return CharSequence.compare(s1.getName(), s2.getName());
             }
         });
+
+        if(keyword != null) {
+            model.addAttribute("books", bookService.findbyKeyword(keyword));
+        }
+        else {
+            model.addAttribute("books", books);
+        }
         return "book-main";
     }
 

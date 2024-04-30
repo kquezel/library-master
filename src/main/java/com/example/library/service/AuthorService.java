@@ -13,4 +13,6 @@ public interface AuthorService {
     boolean update(Author author, long author_id);
     boolean delete(long author_id);
 
+    List<Author> findbyKeyword(String keyword);
+
 }

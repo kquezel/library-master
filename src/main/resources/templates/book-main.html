@@ -9,6 +9,10 @@
 <header th:insert="hf/header.html :: header"></header>
 
 <div class="container mt-5">
+    <form th:action="@{/library/book}" method="get">
+        <input id="txtSearch" type="text" name="keyword">
+        <button type="submit">Find</button>
+    </form>
     <h1>Книги</h1>
     <div sec:authorize="isAuthenticated()">
         Authenticated as <span sec:authentication="name"></span>

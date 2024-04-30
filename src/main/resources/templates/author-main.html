@@ -7,6 +7,12 @@
 <header th:insert="hf/header.html :: header"></header>
 
 <div class="container mt-5">
+
+    <form th:action="@{/library/author}" method="get">
+        <input id="txtSearch" type="text" name="keyword">
+        <button type="submit">Find</button>
+    </form>
+
     <h1>Авторы</h1>
     <div sec:authorize="hasAuthority('EDITOR')">
         <a th:href="'/library/author/add'" class="btn btn-warning">Добавить автора</a>

@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,9 @@ public class BookServiceImpl implements BookService {
             return true;
         }
         return false;
+    }
+
+    public List<Book> findbyKeyword(String keyword) {
+        return bookRepository.findByKeyword(keyword);
     }
 }

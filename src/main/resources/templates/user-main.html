@@ -13,6 +13,8 @@
         <p th:text="${el.fullName}"/>
         <p th:text="${#dates.format(el.birth, 'dd.MM.yyyy')}"/>
         <p th:text="${el.type}"/>
+        <p>Book: </p>
+        <p th:if="${el} == ${book.user} " th:each="book : ${books}" th:text="${book.name}"/>
     </div>
 </div>
 <footer th:insert="hf/footer.html :: footer"></footer>

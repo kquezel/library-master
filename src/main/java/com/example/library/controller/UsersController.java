@@ -37,6 +37,8 @@ public class UsersController {
     @GetMapping("/user")
     public String getAllUsers(Model model) {
         List<User> users = usersService.findAll();
+        List<Book> book = bookService.findAll();
+        model.addAttribute("books", book);
         model.addAttribute("users", users);
         return "user-main";
     }

@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.model.Author;
 import com.example.library.model.Book;
 
 import java.util.List;
@@ -13,5 +14,7 @@ public interface BookService {
     Book read(long book_id);
     boolean update(Book book, long book_id);
     boolean delete(long book_id);
+
+    List<Book> findbyKeyword(String keyword);
 
 }
