@@ -4,11 +4,16 @@
     <title>Авторы</title>
 </head>
 <body>
+<style>
+    .search {
+        float: right;
+    }
+</style>
 <header th:insert="hf/header.html :: header"></header>
 
 <div class="container mt-5">
 
-    <form th:action="@{/library/author}" method="get">
+    <form class="search" th:action="@{/library/author}" method="get">
         <input id="txtSearch" type="text" name="keyword">
         <button type="submit">Find</button>
     </form>

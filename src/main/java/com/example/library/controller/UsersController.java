@@ -42,6 +42,7 @@ public class UsersController {
         model.addAttribute("users", users);
         return "user-main";
     }
+
     @GetMapping("/user/{id}")
     public String getUsersById(@PathVariable(value = "id") Long userId, Model model) {
         Optional<User> user = usersService.findById(userId);
