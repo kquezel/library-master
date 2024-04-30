@@ -73,8 +73,6 @@ public class UsersServiceImpl implements UsersService {
         User userExist = usersRepository.findByUsername(accountDto.getUsername());
         if (userExist != null) {
             return null;
-//            throw new UsernameExistsException(
-//                    "There is an account with that username:" + accountDto.getUsername());
         }
         User user = new User();
         user.setFullName(accountDto.getFullName());

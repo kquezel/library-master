@@ -37,12 +37,6 @@ public class  AuthorController {
         return "author-main";
     }
 
-//    @GetMapping("/author/{id}")
-//    public ResponseEntity<Optional<Author>> getAuthorById(@PathVariable(value = "id") Long authorId)
-//            throws ResourceNotFoundException {
-//        Optional<Author> authors = authorService.findById(authorId);
-//        return ResponseEntity.ok().body(authors);
-//    }
     @GetMapping("/author/{id}")
     public String getAuthorById(@PathVariable(value = "id") Long authorId, Model model) {
        Optional<Author> author = authorService.findById(authorId);
@@ -94,7 +88,5 @@ public class  AuthorController {
         authorService.delete(author.getAuthorId());
         return "redirect:/library/author";
     }
-
-
 
 }

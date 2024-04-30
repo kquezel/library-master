@@ -55,25 +55,6 @@ public class BookController {
         return "book-main";
     }
 
-    //    @PostMapping("/book")
-//    public String userAddBook(@RequestParam String book, Model model){
-//        Optional<Book> bookId = bookService.findById(Long.parseLong(book));
-//        if(bookId.isPresent()) {
-//            User user = new User();
-//            user.setBook(bookId.get());
-//            usersService.create(user);
-//        }
-//        return "redirect:/library/book";
-//    }
-//    @GetMapping("/{user_id}/take/{book_id}")
-//    public String takeBook(@PathVariable(value = "user_id") Long userId, @PathVariable(value = "book_id") Long bookId) {
-//
-//        User user = usersService.getById(userId);
-//        Book book = bookService.getById(bookId);
-//        user.setBook(book);
-//        usersService.create(user);
-//        return "book-main";
-//    }
     @GetMapping("/book/{id}")
     public String getABookById(@PathVariable(value = "id") Long bookId, Model model) {
         Optional<Book> book = bookService.findById(bookId);
@@ -159,32 +140,5 @@ public class BookController {
         Book book = bookService.findById(bookId).orElseThrow();
         bookService.delete(book.getBookId());
         return "redirect:/library/book";
-    }
-
-
-    @GetMapping("/take-book/{bookId}")
-    public ResponseEntity<String> getTakeBookPage(@PathVariable Long bookId) {
-        // Возможно, здесь вам нужно будет вернуть шаблон Thymeleaf для страницы с информацией о взятии книги
-        return ResponseEntity.ok("Страница взятия книги");
-    }
-
-    @PostMapping("/take-book/{bookId}")
-    public ResponseEntity<String> takeBook(@PathVariable Long bookId) {
-        // Получите id пользователя, который выполнил вход, например, из вашего контекста безопасности
-        String username = authentication.getName();
-        User userId = usersService.findUser(username);// ... ваш способ получения id пользователя;
-
-        // Ищем книгу по id
-        Optional<Book> optionalBook = bookService.findById(bookId);
-
-        if (optionalBook.isPresent()) {
-            // Устанавливаем userId в книгу и сохраняем в базе данных
-            Book book = optionalBook.get();
-            book.setUser(userId);
-            bookService.create(book);
-
-            return ResponseEntity.ok("Книга успешно взята");
-        } else
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Книга не найдена");
     }
 }

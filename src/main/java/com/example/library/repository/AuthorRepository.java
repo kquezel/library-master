@@ -12,8 +12,4 @@ public interface AuthorRepository extends JpaRepository<Author, Long>  {
 
     @Query(value="SELECT * FROM author WHERE full_name ILIKE '%' || :keyword || '%'", nativeQuery=true)
     List<Author> findByKeyword(@Param("keyword") String keyword);
-//    List<Author> findByPublished(boolean published);
-
-//    List<Author> findByTitleContaining(String title);
-
 }
