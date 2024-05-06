@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -34,8 +35,8 @@ public class User implements UserDetails {
     private Role type;
     private Boolean enabled;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
-    private Book book;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Book> book;
 
     public User(String fullName, Date birth, Role type) {
         this.fullName= fullName;
@@ -98,11 +99,11 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public Book getBook() {
+    public java.util.List<Book> getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void setBook(java.util.List<Book> book) {
         this.book = book;
     }
 

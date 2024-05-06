@@ -38,6 +38,7 @@ public class BookController {
     public String getAllBooks(Model model, Principal principal, String keyword) {
         User user = usersService.findUser(principal.getName());
         List<Book> books = bookService.findAll();
+
         model.addAttribute("users", user);
         books.sort(new Comparator<Book>() {
             @Override
