@@ -38,12 +38,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Optional<User> findById(long user_id) { return usersRepository.findById(user_id);}
+    public Optional<User> findById(long id) { return usersRepository.findById(id);}
 
     @Override
-    public boolean update(User user, long user_id) {
-        if (usersRepository.existsById(user_id)) {
-            user.setUsersId(user_id);
+    public boolean update(User user, long id) {
+        if (usersRepository.existsById(id)) {
+            user.setId(id);
             usersRepository.save(user);
             return true;
         }
@@ -52,9 +52,9 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public boolean delete(long user_id) {
-        if (usersRepository.existsById(user_id)) {
-            usersRepository.deleteById(user_id);
+    public boolean delete(long id) {
+        if (usersRepository.existsById(id)) {
+            usersRepository.deleteById(id);
             return true;
         }
         return false;

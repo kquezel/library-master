@@ -12,8 +12,8 @@
         <p th:text="${#dates.format(el.birth, 'dd.MM.yyyy')}"/>
         <p th:text="${el.type}"/><br><br>
 
-        <a th:href="'/library/user/' + ${el.usersId} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
-        <form th:action="'/library/user/' + ${el.usersId} + '/remove'" method="post">
+        <a th:href="'/library/user/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
+        <form th:action="'/library/user/' + ${el.id} + '/remove'" method="post">
             <button class="btn btn-warning" type="submit">Удалить</button>
         </form>
     </div>

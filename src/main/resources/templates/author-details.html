@@ -11,8 +11,8 @@
     <p th:text="${el.fullName}"/>
     <p th:text="${#dates.format(el.birth, 'dd.MM.yyyy')}"/>
     <p th:text="${el.biography}"/>
-    <a sec:authorize="hasAuthority('EDITOR')" th:href="'/library/author/' + ${el.authorId} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
-    <form sec:authorize="hasAuthority('EDITOR')" th:action="'/library/author/' + ${el.authorId} + '/remove'" method="post">
+    <a sec:authorize="hasAuthority('EDITOR')" th:href="'/library/author/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
+    <form sec:authorize="hasAuthority('EDITOR')" th:action="'/library/author/' + ${el.id} + '/remove'" method="post">
       <button class="btn btn-warning" type="submit">Удалить</button>
     </form>
   </div>

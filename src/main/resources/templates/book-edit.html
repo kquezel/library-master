@@ -14,7 +14,7 @@
       <input type="text" th:value="${#dates.format(el.publication, 'dd.MM.yyyy')}" name="publication" placeholder="Введите дату публикации" class="form-control">
       <input type="text" th:value="${el.genre}" name="genre" placeholder="Введите жанр" class="form-control">
       <select name="author" >
-        <option th:each="author : ${authors}" th:value="${author.authorId}" th:text="${author.fullName}"></option>
+        <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.fullName}"></option>
       </select>
       <button type="submit" class="btn btn-success">Обновить</button>
     </form>

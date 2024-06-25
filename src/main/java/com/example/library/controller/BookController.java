@@ -55,8 +55,8 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public String getABookById(@PathVariable(value = "id") Long bookId, Model model) {
-        Optional<Book> book = bookService.findById(bookId);
+    public String getABookById(@PathVariable(value = "id") Long id, Model model) {
+        Optional<Book> book = bookService.findById(id);
         ArrayList<Book> res = new ArrayList<>();
         book.ifPresent(res::add);
         model.addAttribute("book", res);
@@ -64,10 +64,9 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/addBook")
-    public String userAddBook(Model model, Principal principal, @RequestParam String action,
-                              @PathVariable(value = "id") Long bookId) {
+    public String userAddBook(Principal principal, @PathVariable(value = "id") Long id) {
         User user = usersService.findUser(principal.getName());
-        Optional<Book> optBook = bookService.findById(bookId);
+        Optional<Book> optBook = bookService.findById(id);
         Book book = optBook.get();
         book.setUser(user);
         bookService.create(book);
@@ -75,9 +74,8 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/returnBook")
-    public String userReturnBook(Model model, Principal principal, @RequestParam String action,
-                                 @PathVariable(value = "id") Long bookId) {
-        Optional<Book> optBook = bookService.findById(bookId);
+    public String userReturnBook(@PathVariable(value = "id") Long id) {
+        Optional<Book> optBook = bookService.findById(id);
         Book book = optBook.get();
         book.setUserNULL();
         bookService.create(book);
@@ -95,18 +93,18 @@ public class BookController {
     public String bookPostAdd(@RequestParam String name, @RequestParam String publication, @RequestParam String genre,
                               @RequestParam String author, Model model) throws ParseException {
         Date publicationDate = dateFormat.get().parse(publication);
-        Optional<Author> authorId = authorService.findById(Long.parseLong(author));
-        if (authorId.isPresent()) {
+        Optional<Author> id = authorService.findById(Long.parseLong(author));
+        if (id.isPresent()) {
             Book book = new Book(name, publicationDate, genre);
-            book.setAuthor(authorId.get());
+            book.setAuthor(id.get());
             bookService.create(book);
         }
         return "redirect:/library/book";
     }
 
     @GetMapping("/book/{id}/edit")
-    public String getBookEdit(@PathVariable(value = "id") Long bookId, Model model) {
-        Optional<Book> book = bookService.findById(bookId);
+    public String getBookEdit(@PathVariable(value = "id") Long id, Model model) {
+        Optional<Book> book = bookService.findById(id);
         ArrayList<Book> res = new ArrayList<>();
         book.ifPresent(res::add);
         model.addAttribute("authors", authorService.findAll());
@@ -115,11 +113,11 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/edit")
-    public String bookPostUpdate(@PathVariable(value = "id") Long bookId, @RequestParam String name,
+    public String bookPostUpdate(@PathVariable(value = "id") Long id, @RequestParam String name,
                                  @RequestParam String publication, @RequestParam String genre,
                                  @RequestParam String author, Model model)
             throws ParseException {
-        Book book = bookService.findById(bookId).orElseThrow();
+        Book book = bookService.findById(id).orElseThrow();
         Date publicationDate = dateFormat.get().parse(publication);
         Optional<Author> authorId = authorService.findById(Long.parseLong(author));
         if (authorId.isPresent()) {
@@ -135,9 +133,9 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/remove")
-    public String bookPostDelete(@PathVariable(value = "id") Long bookId, Model model) {
-        Book book = bookService.findById(bookId).orElseThrow();
-        bookService.delete(book.getBookId());
+    public String bookPostDelete(@PathVariable(value = "id") Long id, Model model) {
+        Book book = bookService.findById(id).orElseThrow();
+        bookService.delete(book.getId());
         return "redirect:/library/book";
     }
 }

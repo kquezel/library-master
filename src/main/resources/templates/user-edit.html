@@ -15,7 +15,7 @@
             <input type="text" th:value="${el.type}" name="type" placeholder="Введите тип пользователя" class="form-control" readonly>
             <select name="book" >
                 <option value="">Выбор книгу</option>
-                <option th:each="book : ${books}" th:value="${book.bookId}" th:text="${book.name}"></option>
+                <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.name}"></option>
             </select>
             <button type="submit" class="btn btn-success">Обновить</button>
         </form>

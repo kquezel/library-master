@@ -16,9 +16,9 @@ import java.util.List;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(unique = true, length = 32)
     private String username;
@@ -107,12 +107,12 @@ public class User implements UserDetails {
         this.book = book;
     }
 
-    public Long getUsersId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUsersId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -142,8 +142,8 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "Users{" +
-                "userId=" + userId +
-                "username= " + username + '\'' +
+                "id= " + id + '\'' +
+                ", username= " + username + '\'' +
                 ", FullName='" + fullName + '\'' +
                 ", Birth='" + birth + '\'' +
                 ", Type='" + type + '\'' +

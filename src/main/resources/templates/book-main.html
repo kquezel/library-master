@@ -27,13 +27,13 @@
     <div th:each="book : ${books}" class="alert alert-info mt-2">
         <p th:text="${book.name}"/>
         <p th:text="${book.genre}"/>
-        <a th:href="'/library/book/' + ${book.bookId}" class="btn btn-warning">Подробнее</a>
+        <a th:href="'/library/book/' + ${book.id}" class="btn btn-warning">Подробнее</a>
         <p th:each="auth : ${userinfo}" th:text="auth"></p>
         <p class="notification" th:each="user : ${users}" th:if="NULL != ${book.user}" th:unless="${user} == ${book.user}">Нет в наличии</p>
-        <form class="notification" th:unless="NULL != ${book.user}" action="#" th:action="'/library/book/'+${book.bookId}+'/addBook'" method="post">
+        <form class="notification" th:unless="NULL != ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/addBook'" method="post">
             <button name="action" type="submit" class="btn btn-success">Взять книгу</button>
         </form>
-        <form class="notification" th:each="user : ${users}" th:if="${user} == ${book.user}" action="#" th:action="'/library/book/'+${book.bookId}+'/returnBook'" method="post">
+        <form class="notification" th:each="user : ${users}" th:if="${user} == ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/returnBook'" method="post">
             <button name="action" th:value="userAddBook" type="submit" class="btn btn-success">Вернуть книгу</button>
         </form>
     </div>

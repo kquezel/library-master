@@ -7,7 +7,7 @@
 <header th:insert="hf/header.html :: header"></header>
 <div class="container mt-5 mb-5">
     <div th:each="el : ${users}">
-        <a th:href="'/library/user/' + ${el.usersId} + '/edit'" class="btn btn-warning">Взять книгу</a><br><br>
+        <a th:href="'/library/user/' + ${el.id} + '/edit'" class="btn btn-warning">Взять книгу</a><br><br>
     </div>
 <!--    <div th:each="el : ${user}">-->
 <!--        <form method="post">-->

@@ -27,12 +27,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> findById(long book_id) { return bookRepository.findById(book_id);}
+    public Optional<Book> findById(long id) { return bookRepository.findById(id);}
 
     @Override
-    public boolean update(Book book, long book_id) {
-        if (bookRepository.existsById(book_id)) {
-            book.setBookId(book_id);
+    public boolean update(Book book, long id) {
+        if (bookRepository.existsById(id)) {
+            book.setId(id);
             bookRepository.save(book);
             return true;
         }
@@ -41,9 +41,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean delete(long book_id) {
-        if (bookRepository.existsById(book_id)) {
-            bookRepository.deleteById(book_id);
+    public boolean delete(long id) {
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
             return true;
         }
         return false;

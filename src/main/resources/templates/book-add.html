@@ -14,7 +14,7 @@
         <input type="text" name="genre" placeholder="Введите жанр" class="form-control">
         <select id="author" name="author">
             <option value="">Выбор автора</option>
-            <option th:each="author : ${authors}" th:value="${author.authorId}" th:text="${author.fullName}"></option>
+            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.fullName}"></option>
         </select>
         <button type="submit" class="btn btn-success">Добавить книгу</button>
     </form>

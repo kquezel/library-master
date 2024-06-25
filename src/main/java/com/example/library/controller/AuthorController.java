@@ -37,8 +37,8 @@ public class  AuthorController {
     }
 
     @GetMapping("/author/{id}")
-    public String getAuthorById(@PathVariable(value = "id") Long authorId, Model model) {
-       Optional<Author> author = authorService.findById(authorId);
+    public String getAuthorById(@PathVariable(value = "id") Long id, Model model) {
+       Optional<Author> author = authorService.findById(id);
         ArrayList<Author> res = new ArrayList<>();
         author.ifPresent(res::add);
         model.addAttribute("author", res);
@@ -59,18 +59,18 @@ public class  AuthorController {
     }
 
     @GetMapping("/author/{id}/edit")
-    public String getAuthorEdit(@PathVariable(value = "id") Long authorId, Model model) {
-        Optional<Author> author = authorService.findById(authorId);
+    public String getAuthorEdit(@PathVariable(value = "id") Long id, Model model) {
+        Optional<Author> author = authorService.findById(id);
         ArrayList<Author> res = new ArrayList<>();
         author.ifPresent(res::add);
         model.addAttribute("author", res);
         return "author-edit";
     }
     @PostMapping("/author/{id}/edit")
-    public String authorPostUpdate(@PathVariable(value = "id") Long authorId, @RequestParam String fullName,
+    public String authorPostUpdate(@PathVariable(value = "id") Long id, @RequestParam String fullName,
                                    @RequestParam String birth, @RequestParam String biography, Model model)
             throws ParseException {
-        Author author = authorService.findById(authorId).orElseThrow();
+        Author author = authorService.findById(id).orElseThrow();
         Date birthDate = dateFormat.get().parse(birth);
         author.setFullName(fullName);
         author.setBirth(birthDate);
@@ -82,9 +82,9 @@ public class  AuthorController {
     }
 
     @PostMapping("/author/{id}/remove")
-    public String authorPostDelete(@PathVariable(value = "id") Long authorId, Model model) {
-        Author author = authorService.findById(authorId).orElseThrow();
-        authorService.delete(author.getAuthorId());
+    public String authorPostDelete(@PathVariable(value = "id") Long id, Model model) {
+        Author author = authorService.findById(id).orElseThrow();
+        authorService.delete(author.getId());
         return "redirect:/library/author";
     }
 

@@ -11,9 +11,9 @@ import java.util.List;
 @Table(name = "author")
 public class Author {
     @Id
-    @Column(name = "author_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long authorId;
+    private Long id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -39,12 +39,12 @@ public class Author {
     public Author() {
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -74,7 +74,7 @@ public class Author {
     @Override
     public String toString() {
         return "Author{" +
-                "authorId=" + authorId +
+                "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", birth='" + birth + '\'' +
                 ", biography='" + biography + '\'' +

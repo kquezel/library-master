@@ -25,18 +25,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Optional<Author> findById(long author_id) { return authorRepository.findById(author_id);}
-
-
-    @Override
-    public Author read(long author_id) {
-        return authorRepository.getOne(author_id);
-    }
+    public Optional<Author> findById(long id) { return authorRepository.findById(id);}
 
     @Override
-    public boolean update(Author author, long author_id) {
-        if (authorRepository.existsById(author_id)) {
-            author.setAuthorId(author_id);
+    public boolean update(Author author, long id) {
+        if (authorRepository.existsById(id)) {
+            author.setId(id);
             authorRepository.save(author);
             return true;
         }
@@ -45,9 +39,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public boolean delete(long author_id) {
-        if (authorRepository.existsById(author_id)) {
-            authorRepository.deleteById(author_id);
+    public boolean delete(long id) {
+        if (authorRepository.existsById(id)) {
+            authorRepository.deleteById(id);
             return true;
         }
         return false;
