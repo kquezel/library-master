@@ -28,7 +28,6 @@ public class Author {
     private List<Book> books = new ArrayList<>();
 
 
-    //… getters and setters
 
 
     public Author(String fullName, Date birth, String biography) {

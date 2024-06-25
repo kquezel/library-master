@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:insert="hf/head.html :: head">
   <title>Информация о книгах</title>
 </head>
@@ -11,13 +11,9 @@
     <p th:text="${el.name}"/>
     <p th:text="${#dates.format(el.publication, 'dd.MM.yyyy')}"/>
     <p th:text="${el.genre}"/><br><br>
-    <p>Author: </p>
+    <p>Автор: </p>
       <p th:text="${el.author.fullName}"/>
-<!--    <p>Reader: </p>-->
-<!--      <p th:text="${el.user.fullName}"></p>-->
-<!--    <a sec:authorize="hasAuthority('EDITOR')" th:href="'/library/book/' + ${el.bookId} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>-->
-<!--    <form sec:authorize="hasAuthority('EDITOR')" th:action="'/library/book/' + ${el.bookId} + '/remove'" method="post">-->
-      <button class="btn btn-warning" type="submit">Удалить</button>
+    <button class="btn btn-warning" type="submit">Удалить</button>
     </form>
   </div>
 </div>

@@ -1,6 +1,5 @@
 package com.example.library.controller;
 
-import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.model.User;
 import com.example.library.model.enums.Role;

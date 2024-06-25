@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-//@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
 
@@ -40,15 +39,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public Optional<User> findById(long user_id) { return usersRepository.findById(user_id);}
-
-
-    @Override
-    public User getById(Long user_id) { return  usersRepository.getById(user_id); }
-
-    @Override
-    public User read(long user_id) {
-        return usersRepository.getOne(user_id);
-    }
 
     @Override
     public boolean update(User user, long user_id) {
