@@ -63,7 +63,7 @@ public class BookController {
         return "book-details";
     }
 
-    @PostMapping("/book/{id}/addBook")
+    @PostMapping("/book/{id}/add-book")
     public String userAddBook(Principal principal, @PathVariable(value = "id") Long id) {
         User user = usersService.findUser(principal.getName());
         Optional<Book> optBook = bookService.findById(id);
@@ -73,7 +73,7 @@ public class BookController {
         return "redirect:/library/book";
     }
 
-    @PostMapping("/book/{id}/returnBook")
+    @PostMapping("/book/{id}/return-book")
     public String userReturnBook(@PathVariable(value = "id") Long id) {
         Optional<Book> optBook = bookService.findById(id);
         Book book = optBook.get();

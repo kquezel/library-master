@@ -46,9 +46,10 @@ public class  AuthorController {
     }
 
     @GetMapping("/author/add")
-    public String authorAdd(Model model) {
+    public String authorAdd() {
         return "author-add";
     }
+
     @PostMapping("/author/add")
     public String authorPostAdd(@RequestParam String fullName, @RequestParam String birth,@RequestParam String biography,
                                 Model model) throws ParseException {

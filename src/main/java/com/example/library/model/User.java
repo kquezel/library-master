@@ -38,10 +38,13 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Book> book;
 
-    public User(String fullName, Date birth, Role type) {
+    public User(String fullName, Date birth, Boolean enabled, String password, Role type, String username) {
         this.fullName= fullName;
         this.birth = birth;
+        this.enabled = enabled;
+        this.password = password;
         this.type = type;
+        this.username = username;
     }
 
     public User() {
@@ -146,6 +149,8 @@ public class User implements UserDetails {
                 ", username= " + username + '\'' +
                 ", FullName='" + fullName + '\'' +
                 ", Birth='" + birth + '\'' +
+                ", Enabled='" + enabled + '\'' +
+                ", Password='" + password + '\'' +
                 ", Type='" + type + '\'' +
                 '}';
     }

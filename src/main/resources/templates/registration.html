@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="hf/head.html :: head">
+    <title>Spring Security Example</title>
+</head>
+<body>
+<div class="alert alert-info mt-2">
+    <a href="/" class="btn btn-success">Главная страница</a><br><br>
+    <form action="/registration" method="post" >
+        <div><label> Полное имя:  <input type="text" name="full_name" style="margin-left:10px "/> </label></div>
+        <div class="input-group date">
+            <label> Дата рождения: <input type="text" name="birth" class="form-control">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </label>
+        </div>
+        <div><label> Логин:  <input type="text" name="username" style="margin-left:10px "/> </label></div>
+        <div><label> Пароль: <input type="password" name="password"/> </label></div><br>
+        <div><button type="submit" style="background-color: cadetblue ">Зарегистрироваться</button></div>
+    </form>
+</div>
+</body>
+</html>

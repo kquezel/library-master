@@ -51,25 +51,6 @@ public class UsersController {
         return "user-details";
     }
 
-    @GetMapping("/user/add")
-    public String userAdd(Model model) {
-        model.addAttribute("books", bookService.findAll());
-        return "user-add";
-    }
-    @PostMapping("/user/add")
-    public String userPostAdd(@RequestParam String fullName, @RequestParam String birth, @RequestParam Role type,
-                              @RequestParam String book, Model model) throws ParseException {
-        Date birthDate = dateFormat.get().parse(birth);
-        Optional<Book> bookId = bookService.findById(Long.parseLong(book));
-        if(bookId.isPresent()) {
-            User user = new User(fullName, birthDate, type);
-            List<Book> books = user.getBook();
-            user.setBook(books);
-            usersService.create(user);
-        }
-        return "redirect:/library/user";
-    }
-
     @GetMapping("/")
     public String getUserBook(Model model) {
         model.addAttribute("user", usersService.findAll());

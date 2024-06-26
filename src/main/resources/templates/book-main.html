@@ -30,10 +30,10 @@
         <a th:href="'/library/book/' + ${book.id}" class="btn btn-warning">Подробнее</a>
         <p th:each="auth : ${userinfo}" th:text="auth"></p>
         <p class="notification" th:each="user : ${users}" th:if="NULL != ${book.user}" th:unless="${user} == ${book.user}">Нет в наличии</p>
-        <form class="notification" th:unless="NULL != ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/addBook'" method="post">
+        <form class="notification" th:unless="NULL != ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/add-book'" method="post">
             <button name="action" type="submit" class="btn btn-success">Взять книгу</button>
         </form>
-        <form class="notification" th:each="user : ${users}" th:if="${user} == ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/returnBook'" method="post">
+        <form class="notification" th:each="user : ${users}" th:if="${user} == ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/return-book'" method="post">
             <button name="action" th:value="userAddBook" type="submit" class="btn btn-success">Вернуть книгу</button>
         </form>
     </div>

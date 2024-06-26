@@ -16,6 +16,7 @@
                 <li class="nav-item pull-sm-0">
                     <span th:case="${false}">
                             <a class="nav-link btn btn-outline-primary" href="/login">Войти</a>
+                            <a class="nav-link btn btn-outline-primary" href="/registration">Зарегистрироваться</a>
                     </span>
                     <span th:case="${true}">
                         <form th:action="@{/logout}" method="post">
