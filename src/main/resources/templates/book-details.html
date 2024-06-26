@@ -4,7 +4,7 @@
   <title>Информация о книгах</title>
 </head>
 <body>
-<header th:insert="hf/header.html :: header"></header>
+<header th:insert="~{hf/header.html :: header}"></header>
 <h2 th:text="${result}" class="alert alert-info mt-2"></h2>
 <div class="container mt-5">
   <div th:each="el : ${book} "  class="alert alert-info mt-2">
@@ -18,6 +18,6 @@
     </form>
   </div>
 </div>
-<footer th:insert="hf/footer.html :: footer"></footer>
+<footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>

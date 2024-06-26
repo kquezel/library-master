@@ -25,10 +25,15 @@ public class Author {
     private String biography;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "author")
-    private List<Book> books = new ArrayList<>();
+    private List<Book> book = new ArrayList<>();
 
+    public List<Book> getBook() {
+        return book;
+    }
 
-
+    public void setBook(List<Book> book) {
+        this.book = book;
+    }
 
     public Author(String fullName, Date birth, String biography) {
         this.fullName = fullName;

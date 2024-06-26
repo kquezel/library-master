@@ -27,14 +27,14 @@ public class Book {
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    @JoinColumn(name="author", nullable=false)
+    @JoinColumn(name="author_id", nullable=false)
     private Author author;
 
     public Book(String name, Date publication, String genre) {

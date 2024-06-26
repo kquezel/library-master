@@ -9,7 +9,7 @@
         float: right;
     }
 </style>
-<header th:insert="hf/header.html :: header"></header>
+<header th:insert="~{hf/header.html :: header}"></header>
 
 <div class="container mt-5">
 
@@ -27,6 +27,6 @@
         <a th:href="'/library/author/' + ${el.id}" class="btn btn-warning">Подробнее</a>
     </div>
 </div>
-<footer th:insert="hf/footer.html :: footer"></footer>
+<footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>

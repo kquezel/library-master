@@ -4,7 +4,7 @@
     <title>Пользователи</title>
 </head>
 <body>
-<header th:insert="hf/header.html :: header"></header>
+<header th:insert="~{hf/header.html :: header}"></header>
 
 <div class="container mt-5">
     <h1>Пользователи</h1>
@@ -17,6 +17,6 @@
         <p th:if="${el} == ${book.user} " th:each="book : ${books}" th:text="${book.name}"/>
     </div>
 </div>
-<footer th:insert="hf/footer.html :: footer"></footer>
+<footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>

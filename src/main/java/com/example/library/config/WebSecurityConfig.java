@@ -20,7 +20,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         (requests) -> requests
-                                .requestMatchers("/", "/home", "/library/author", "/library/book").permitAll()
+                                .requestMatchers("/", "/home", "/scripts/*").permitAll()
                                 .requestMatchers("/library/author", "/library/book").hasAuthority(Role.READER.name())
                                 .requestMatchers("/library/author/add", "/library/book/add").hasAuthority(Role.EDITOR.name())
                                 .anyRequest().authenticated()

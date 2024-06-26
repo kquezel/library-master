@@ -15,7 +15,7 @@
     }
 </style>
 
-<header th:insert="hf/header.html :: header"></header>
+<header th:insert="~{hf/header.html :: header}"></header>
 
 <div class="container mt-5">
     <form class="search" th:action="@{/library/book}" method="get">
@@ -40,6 +40,6 @@
 
 
 </div>
-<footer th:insert="hf/footer.html :: footer"></footer>
+<footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>

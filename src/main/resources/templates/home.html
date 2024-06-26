@@ -4,7 +4,7 @@
     <title th:text="${title}"/>
 </head>
 <body>
-<header th:insert="hf/header.html :: header"></header>
+<header th:insert="~{hf/header.html :: header}"></header>
 
 <main>
 
@@ -20,6 +20,6 @@
         </div>
     </section>
 </main>
-<footer th:insert="hf/footer.html :: footer"></footer>
+<footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>

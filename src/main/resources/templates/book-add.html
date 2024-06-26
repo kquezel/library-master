@@ -4,13 +4,16 @@
     <title>Добавление книги</title>
 </head>
 <body>
-<header th:insert="hf/header.html :: header"></header>
+<header th:insert="~{hf/header.html :: header}"></header>
 <div class="container mt-5 mb-5">
     <h1>Добавление книги</h1>
     </div>
     <form action="/library/book/add" method="post">
         <input type="text" name="name" placeholder="Введите название" class="form-control">
-        <input type="text" name="publication" placeholder="Введите дату публикации (дд.мм.гггг)" class="form-control">
+        <div class="input-group date">
+            <input type="text" placeholder="Введите дату публикации" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+<!--        <input type="text" name="publication" placeholder="Введите дату публикации (дд.мм.гггг)" class="form-control">-->
         <input type="text" name="genre" placeholder="Введите жанр" class="form-control">
         <select id="author" name="author">
             <option value="">Выбор автора</option>
@@ -19,6 +22,6 @@
         <button type="submit" class="btn btn-success">Добавить книгу</button>
     </form>
 </div>
-<footer th:insert="hf/footer.html :: footer"></footer>
+<footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>
