@@ -69,19 +69,15 @@ public class  AuthorController {
     public String authorPostUpdate(@PathVariable(value = "id") Long id, @RequestParam String fullName,
                                    @RequestParam String birth, @RequestParam String biography, Model model)
             throws ParseException {
-        Author author = authorService.findById(id).orElseThrow();
-        Date birthDate = dateFormat.get().parse(birth);
-        author.setFullName(fullName);
-        author.setBirth(birthDate);
-        author.setBiography(biography);
-        authorService.create(author);
+        Author authorId = authorService.findById(id).orElseThrow();
+        Author author = authorService.update(authorId.getId(), fullName, birth, biography);
         model.addAttribute("author", author);
         model.addAttribute("result", "Success update");
         return "author-details";
     }
 
     @PostMapping("/author/{id}/remove")
-    public String authorPostDelete(@PathVariable(value = "id") Long id, Model model) {
+    public String authorPostDelete(@PathVariable(value = "id") Long id) {
         Author author = authorService.findById(id).orElseThrow();
         authorService.delete(author.getId());
         return "redirect:/library/author";

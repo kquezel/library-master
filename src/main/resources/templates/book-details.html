@@ -5,7 +5,8 @@
 </head>
 <body>
 <header th:insert="~{hf/header.html :: header}"></header>
-<h2 th:text="${result}" class="alert alert-info mt-2"></h2>
+<h2 th:if="${result == true}" class="alert alert-info mt-2">Success update</h2>
+<h2 th:if="${result == false}" class="alert alert-info mt-2">Invalid result</h2>
 <div class="container mt-5">
   <div th:each="el : ${book} "  class="alert alert-info mt-2">
     <p th:text="${el.name}"/>

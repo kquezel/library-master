@@ -1,10 +1,14 @@
 package com.example.library.service;
 
 import com.example.library.model.Author;
+import com.example.library.model.Book;
 import com.example.library.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +17,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    private static final ThreadLocal<SimpleDateFormat> dateFormat =
+            ThreadLocal.withInitial(() -> new SimpleDateFormat("dd.MM.yyyy"));
 
     @Override
     public void create(Author author) {
@@ -28,14 +35,15 @@ public class AuthorServiceImpl implements AuthorService {
     public Optional<Author> findById(long id) { return authorRepository.findById(id);}
 
     @Override
-    public boolean update(Author author, long id) {
-        if (authorRepository.existsById(id)) {
-            author.setId(id);
-            authorRepository.save(author);
-            return true;
-        }
+    public Author update(Long authorId, String fullName, String birth,
+                         String biography) throws ParseException {
+        Author author = authorRepository.findById(authorId).get();
+        Date birthDate = dateFormat.get().parse(birth);
+        author.setFullName(fullName);
+        author.setBirth(birthDate);
+        author.setBiography(biography);
 
-        return false;
+        return authorRepository.save(author);
     }
 
     @Override

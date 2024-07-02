@@ -86,7 +86,7 @@ public class BookController {
 
     @PostMapping("/book/add")
     public String bookPostAdd(@RequestParam String name, @RequestParam String publication, @RequestParam String genre,
-                              @RequestParam String author, Model model) throws ParseException {
+                              @RequestParam String author) throws ParseException {
         Date publicationDate = dateFormat.get().parse(publication);
         Optional<Author> id = authorService.findById(Long.parseLong(author));
         if (id.isPresent()) {
@@ -108,27 +108,22 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/edit")
-    public String bookPostUpdate(@PathVariable(value = "id") Long id, @RequestParam String name,
-                                 @RequestParam String publication, @RequestParam String genre,
-                                 @RequestParam String author, Model model)
-            throws ParseException {
-        Book book = bookService.findById(id).orElseThrow();
-        Date publicationDate = dateFormat.get().parse(publication);
+    public String bookPostUpdate(@PathVariable(value = "id") Long bookId, @RequestParam String name, @RequestParam String publication, @RequestParam String genre,
+                                 @RequestParam String author, Model model) throws ParseException {
         Optional<Author> authorId = authorService.findById(Long.parseLong(author));
+        boolean result;
         if (authorId.isPresent()) {
-            book.setAuthor(authorId.get());
-            book.setName(name);
-            book.setPublication(publicationDate);
-            book.setGenre(genre);
-            bookService.create(book);
-        }
-        model.addAttribute("book", book);
-        model.addAttribute("result", "Success update");
+            Book book = bookService.update(bookId, name, publication, genre, author);
+            model.addAttribute("book", book);
+            result = true;
+        } else { result = false; }
+
+        model.addAttribute("result", result);
         return "book-details";
     }
 
     @PostMapping("/book/{id}/remove")
-    public String bookPostDelete(@PathVariable(value = "id") Long id, Model model) {
+    public String bookPostDelete(@PathVariable(value = "id") Long id) {
         Book book = bookService.findById(id).orElseThrow();
         bookService.delete(book.getId());
         return "redirect:/library/book";
