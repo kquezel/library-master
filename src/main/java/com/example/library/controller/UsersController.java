@@ -45,9 +45,9 @@ public class UsersController {
     @GetMapping("/user/{id}")
     public String getUsersById(@PathVariable(value = "id") Long id, Model model) {
         Optional<User> user = usersService.findById(id);
-        ArrayList<User> res = new ArrayList<>();
-        user.ifPresent(res::add);
-        model.addAttribute("user", res);
+        ArrayList<User> users = new ArrayList<>();
+        user.ifPresent(users::add);
+        model.addAttribute("user", users);
         return "user-details";
     }
 
@@ -60,9 +60,9 @@ public class UsersController {
     @GetMapping("/user/{id}/edit")
     public String getUserEdit(@PathVariable(value = "id") Long id, Model model) {
         Optional<User> user = usersService.findById(id);
-        ArrayList<User> res = new ArrayList<>();
-        user.ifPresent(res::add);
-        model.addAttribute("user", res);
+        ArrayList<User> users = new ArrayList<>();
+        user.ifPresent(users::add);
+        model.addAttribute("user", users);
         model.addAttribute("books", bookService.findAll());
         return "user-edit";
     }

@@ -25,8 +25,6 @@ public class  AuthorController {
 
     @GetMapping("/author")
     public String getAllAuthors(Model model, String keyword) {
-
-
         if(keyword != null) {
             model.addAttribute("authors", authorService.findbyKeyword(keyword));
         }
@@ -39,9 +37,9 @@ public class  AuthorController {
     @GetMapping("/author/{id}")
     public String getAuthorById(@PathVariable(value = "id") Long id, Model model) {
        Optional<Author> author = authorService.findById(id);
-        ArrayList<Author> res = new ArrayList<>();
-        author.ifPresent(res::add);
-        model.addAttribute("author", res);
+        ArrayList<Author> authors = new ArrayList<>();
+        author.ifPresent(authors::add);
+        model.addAttribute("author", authors);
         return "author-details";
     }
 
@@ -51,8 +49,8 @@ public class  AuthorController {
     }
 
     @PostMapping("/author/add")
-    public String authorPostAdd(@RequestParam String fullName, @RequestParam String birth,@RequestParam String biography,
-                                Model model) throws ParseException {
+    public String authorPostAdd(@RequestParam String fullName, @RequestParam String birth,
+                                @RequestParam String biography) throws ParseException {
         Date birthDate = dateFormat.get().parse(birth);
         Author author = new Author(fullName, birthDate, biography);
         authorService.create(author);
@@ -62,9 +60,9 @@ public class  AuthorController {
     @GetMapping("/author/{id}/edit")
     public String getAuthorEdit(@PathVariable(value = "id") Long id, Model model) {
         Optional<Author> author = authorService.findById(id);
-        ArrayList<Author> res = new ArrayList<>();
-        author.ifPresent(res::add);
-        model.addAttribute("author", res);
+        ArrayList<Author> authors = new ArrayList<>();
+        author.ifPresent(authors::add);
+        model.addAttribute("author", authors);
         return "author-edit";
     }
     @PostMapping("/author/{id}/edit")

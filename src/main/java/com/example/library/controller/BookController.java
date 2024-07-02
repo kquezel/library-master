@@ -38,12 +38,7 @@ public class BookController {
         List<Book> books = bookService.findAll();
 
         model.addAttribute("users", user);
-        books.sort(new Comparator<Book>() {
-            @Override
-            public int compare(Book s1, Book s2) {
-                return CharSequence.compare(s1.getName(), s2.getName());
-            }
-        });
+        books.sort((s1, s2) -> CharSequence.compare(s1.getName(), s2.getName()));
 
         if(keyword != null) {
             model.addAttribute("books", bookService.findbyKeyword(keyword));
@@ -57,9 +52,9 @@ public class BookController {
     @GetMapping("/book/{id}")
     public String getABookById(@PathVariable(value = "id") Long id, Model model) {
         Optional<Book> book = bookService.findById(id);
-        ArrayList<Book> res = new ArrayList<>();
-        book.ifPresent(res::add);
-        model.addAttribute("book", res);
+        ArrayList<Book> books = new ArrayList<>();
+        book.ifPresent(books::add);
+        model.addAttribute("book", books);
         return "book-details";
     }
 
@@ -105,10 +100,10 @@ public class BookController {
     @GetMapping("/book/{id}/edit")
     public String getBookEdit(@PathVariable(value = "id") Long id, Model model) {
         Optional<Book> book = bookService.findById(id);
-        ArrayList<Book> res = new ArrayList<>();
-        book.ifPresent(res::add);
+        ArrayList<Book> books = new ArrayList<>();
+        book.ifPresent(books::add);
         model.addAttribute("authors", authorService.findAll());
-        model.addAttribute("book", res);
+        model.addAttribute("book", books);
         return "book-edit";
     }
 
@@ -122,11 +117,11 @@ public class BookController {
         Optional<Author> authorId = authorService.findById(Long.parseLong(author));
         if (authorId.isPresent()) {
             book.setAuthor(authorId.get());
+            book.setName(name);
+            book.setPublication(publicationDate);
+            book.setGenre(genre);
             bookService.create(book);
         }
-        book.setName(name);
-        book.setPublication(publicationDate);
-        book.setGenre(genre);
         model.addAttribute("book", book);
         model.addAttribute("result", "Success update");
         return "book-details";
