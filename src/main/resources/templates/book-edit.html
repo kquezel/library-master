@@ -8,11 +8,13 @@
 <div class="container mt-5 mb-5">
   <h1>Редактирование книги</h1>
   <input class="alert alert-info mt-2" type="text" th:value="${result}">
-  <div th:each="el : ${book}">
-    <form method="post">
-      <input type="text" th:value="${el.name}" name="name" placeholder="Введите название" class="form-control">
-      <input type="text" th:value="${#dates.format(el.publication, 'dd.MM.yyyy')}" name="publication" placeholder="Введите дату публикации" class="form-control">
-      <input type="text" th:value="${el.genre}" name="genre" placeholder="Введите жанр" class="form-control">
+  <div>
+    <form method="post"
+          modelAttribute="book"
+          th:object="${book}">
+      <input type="text" th:value="*{name}" name="name" placeholder="Введите название" class="form-control">
+      <input type="text" th:value="*{#dates.format(publication, 'dd.MM.yyyy')}" name="publication" placeholder="Введите дату публикации" class="form-control">
+      <input type="text" th:value="*{genre}" name="genre" placeholder="Введите жанр" class="form-control">
       <select name="author" >
         <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.fullName}"></option>
       </select>

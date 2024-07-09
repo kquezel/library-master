@@ -7,11 +7,17 @@ import com.example.library.repository.UsersRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsersServiceImpl implements UsersService {
+
+    private static final ThreadLocal<SimpleDateFormat> dateFormat =
+            ThreadLocal.withInitial(() -> new SimpleDateFormat("dd.MM.yyyy"));
 
 
     private final UsersRepository usersRepository;
@@ -59,8 +65,9 @@ public class UsersServiceImpl implements UsersService {
         }
         return false;
     }
-    public User registerNewUserAccount(UserDto accountDto) throws UsernameExistsException {
+    public User registerNewUserAccount(UserDto accountDto) throws ParseException {
         User userExist = usersRepository.findByUsername(accountDto.getUsername());
+        Date birthDate = dateFormat.get().parse(accountDto.getBirth());
         if (userExist != null) {
             return null;
         }
@@ -70,7 +77,7 @@ public class UsersServiceImpl implements UsersService {
         user.setEnabled(true);
         user.setUsername(accountDto.getUsername());
         user.setType(accountDto.getType());
-        user.setBirth(accountDto.getBirth());
+        user.setBirth(birthDate);
         return usersRepository.save(user);
     }
 

@@ -6,15 +6,46 @@
 <body>
 <div class="alert alert-info mt-2">
     <a href="/" class="btn btn-success">Главная страница</a><br><br>
-    <form action="/registration" method="post" >
-        <div><label> Полное имя:  <input type="text" name="full_name" style="margin-left:10px "/> </label></div>
-        <div class="input-group date">
-            <label> Дата рождения: <input type="text" name="birth" class="form-control">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    <form action="/registration"
+          method="post"
+          modelAttribute="user"
+          th:object="${user}" >
+
+        <div>
+            <label> Полное имя:
+                <input type="text" th:field="*{fullName}" name="fullName" style="margin-left:10px "/>
             </label>
+            <ul>
+                <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}" class="error"></li>
+            </ul>
         </div>
-        <div><label> Логин:  <input type="text" name="username" style="margin-left:10px "/> </label></div>
-        <div><label> Пароль: <input type="password" name="password"/> </label></div><br>
+        <div>
+            <div class="input-group date">
+                <label> Дата рождения:
+                    <input type="text" th:field="*{birth}" name="birth" class="form-control">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </label>
+                <ul>
+                    <li th:each="err : ${#fields.errors('birth')}" th:text="${err}" class="error"></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <label> Логин:
+                <input type="text" th:field="*{username}" name="username" style="margin-left:10px "/>
+            </label>
+            <ul>
+                <li th:each="err : ${#fields.errors('username')}" th:text="${err}" class="error"></li>
+            </ul>
+        </div>
+        <div>
+            <label> Пароль:
+                <input type="password" th:field="*{password}" name="password"/>
+            </label>
+            <ul>
+                <li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="error"></li>
+            </ul>
+        </div><br>
         <div><button type="submit" style="background-color: cadetblue ">Зарегистрироваться</button></div>
     </form>
 </div>

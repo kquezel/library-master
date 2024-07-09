@@ -8,11 +8,30 @@
 <div class="container mt-5 mb-5">
   <h1>Редактирование автора</h1>
   <input class="alert alert-info mt-2" type="text" th:value="${result}">
-  <div th:each="el : ${author}">
-    <form method="post">
-      <input type="text" th:value="${el.fullName}" name="fullName" placeholder="Введите полное имя" class="form-control" >
-      <input type="text" th:value="${#dates.format(el.birth, 'dd.MM.yyyy')}" name="birth" placeholder="Введите дату рождения" class="form-control">
-      <textarea name="biography" placeholder="Введите биографию" class="form-control" th:text="${el.biography}"/>
+  <div th:each="el : ${authorAdd}">
+    <form
+            method="post"
+            modelAttribute="author"
+            th:object="${author}"
+    >
+      <div>
+        <input type="text" th:field="*{fullName}" th:value="${el.fullName}" name="fullName" placeholder="Введите полное имя" class="form-control" >
+        <ul>
+          <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}" class="error"></li>
+        </ul>
+      </div>
+      <div>
+        <input type="text" th:field="*{birth}" th:value="${#dates.format(el.birth, 'dd.MM.yyyy')}" name="birth" placeholder="Введите дату рождения" class="form-control">
+        <ul>
+          <li th:each="err : ${#fields.errors('birth')}" th:text="${err}" class="error"></li>
+        </ul>
+      </div>
+      <div>
+        <textarea th:field="*{biography}" name="biography" placeholder="Введите биографию" class="form-control" th:text="${el.biography}"/>
+        <ul>
+          <li th:each="err : ${#fields.errors('biography')}" th:text="${err}" class="error"></li>
+        </ul>
+      </div>
       <button type="submit" class="btn btn-success">Обновить</button>
     </form>
   </div>

@@ -2,6 +2,8 @@ package com.example.library.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +20,6 @@ public class Author {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "birth")
     private Date birth;
 
     @Column(name = "biography")

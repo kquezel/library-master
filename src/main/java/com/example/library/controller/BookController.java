@@ -1,16 +1,20 @@
 package com.example.library.controller;
 
+import com.example.library.dto.AuthorDto;
+import com.example.library.dto.BookDto;
 import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.model.User;
 import com.example.library.service.AuthorService;
 import com.example.library.service.BookService;
 import com.example.library.service.UsersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -51,9 +55,9 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     public String getABookById(@PathVariable(value = "id") Long id, Model model) {
-        Optional<Book> book = bookService.findById(id);
+        Optional<Book> bookId = bookService.findById(id);
         ArrayList<Book> books = new ArrayList<>();
-        book.ifPresent(books::add);
+        bookId.ifPresent(books::add);
         model.addAttribute("book", books);
         return "book-details";
     }
@@ -80,13 +84,19 @@ public class BookController {
 
     @GetMapping("/book/add")
     public String bookAdd(Model model) {
+        BookDto newBook = new BookDto();
+        model.addAttribute("book", newBook);
         model.addAttribute("authors", authorService.findAll());
         return "book-add";
     }
 
     @PostMapping("/book/add")
-    public String bookPostAdd(@RequestParam String name, @RequestParam String publication, @RequestParam String genre,
-                              @RequestParam String author) throws ParseException {
+    public String bookPostAdd(@Valid @ModelAttribute("book") BookDto newBook, BindingResult result, @RequestParam String name, @RequestParam String publication, @RequestParam String genre,
+                              @RequestParam String author, Model model) throws ParseException {
+        if(result.hasErrors()) {
+            model.addAttribute("newBook", newBook);
+            return "book-add";
+        }
         Date publicationDate = dateFormat.get().parse(publication);
         Optional<Author> id = authorService.findById(Long.parseLong(author));
         if (id.isPresent()) {
@@ -99,12 +109,22 @@ public class BookController {
 
     @GetMapping("/book/{id}/edit")
     public String getBookEdit(@PathVariable(value = "id") Long id, Model model) {
-        Optional<Book> book = bookService.findById(id);
-        ArrayList<Book> books = new ArrayList<>();
-        book.ifPresent(books::add);
-        model.addAttribute("authors", authorService.findAll());
-        model.addAttribute("book", books);
-        return "book-edit";
+        BookDto newBook = new BookDto();
+        Optional<Book> bookOptional = bookService.findById(id);
+        if(bookOptional.isPresent()) {
+            Book book = bookOptional.get();
+            model.addAttribute("authors", authorService.findAll());
+            model.addAttribute("book", book);
+            return "book-edit";
+        }
+
+        model.addAttribute("book", newBook);
+        return "book-add";
+
+//        ArrayList<Book> books = new ArrayList<>();
+//        book.ifPresent(books::add);
+
+//        return "book-edit";
     }
 
     @PostMapping("/book/{id}/edit")

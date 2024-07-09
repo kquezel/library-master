@@ -1,6 +1,7 @@
 package com.example.library.dto;
 
-import com.example.library.model.enums.Role;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -17,18 +18,17 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class BookDto {
     @NotEmpty
-    @Size(min = 2, max = 50)
-    private String fullName;
-    @NotEmpty
-    @Size(min = 3, max = 255)
-    private String username;
-    @NotEmpty
-    private String password;
+    @Size(min = 5, max = 50)
+    private String name;
     @NotNull
     @DateTimeFormat(pattern="dd.MM.yyyy")
     @Pattern(regexp = "(^0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).(\\d{4}$)", message = "{datetime.format.error}")
-    private String birth;
-    private Role type;
+    private String publication;
+    @NotEmpty
+    @Min(value = 4, message = "размер должно быть не меньше 4")
+    private String genre;
+    @NotEmpty
+    private String author;
 }
