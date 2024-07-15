@@ -19,6 +19,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class BookDto {
+    private String guid;
     @NotEmpty
     @Size(min = 5, max = 50)
     private String name;
@@ -31,4 +32,5 @@ public class BookDto {
     private String genre;
     @NotEmpty
     private String author;
+
 }

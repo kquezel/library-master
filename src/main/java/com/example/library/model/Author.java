@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "author")
@@ -24,6 +25,16 @@ public class Author {
 
     @Column(name = "biography")
     private String biography;
+
+    private UUID guid;
+
+    public UUID getGuid() {
+        return guid;
+    }
+
+    public void setGuid(UUID guid) {
+        this.guid = guid;
+    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "author")
     private List<Book> book = new ArrayList<>();

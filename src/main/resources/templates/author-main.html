@@ -20,7 +20,7 @@
 
     <h1>Авторы</h1>
     <div sec:authorize="hasAuthority('EDITOR')">
-        <a th:href="'/library/author/add'" class="btn btn-warning">Добавить автора</a>
+        <a th:href="'/library/author/0/edit'" class="btn btn-warning">Добавить автора</a>
     </div>
     <div th:each="el : ${authors}" class="alert alert-info mt-2">
         <p th:text="${el.fullName}"/>

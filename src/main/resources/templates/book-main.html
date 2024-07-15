@@ -23,7 +23,7 @@
         <button type="submit">Поиск</button>
     </form>
     <h1>Книги</h1>
-    <a sec:authorize="hasAuthority('EDITOR')" th:href="'/library/book/add'" class="btn btn-warning">Добавить книгу</a>
+    <a sec:authorize="hasAuthority('EDITOR')" th:href="'/library/book/0/edit'" class="btn btn-warning">Добавить книгу</a>
     <div th:each="book : ${books}" class="alert alert-info mt-2">
         <p th:text="${book.name}"/>
         <p th:text="${book.genre}"/>

@@ -1,40 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:insert="hf/head.html :: head">
-  <title>Редактирование автора</title>
+  +    <title>Редактирование/добавление автора</title>
 </head>
 <body>
 <header th:insert="~{hf/header.html :: header}"></header>
 <div class="container mt-5 mb-5">
-  <h1>Редактирование автора</h1>
-  <input class="alert alert-info mt-2" type="text" th:value="${result}">
-  <div th:each="el : ${authorAdd}">
-    <form
-            method="post"
-            modelAttribute="author"
-            th:object="${author}"
-    >
-      <div>
-        <input type="text" th:field="*{fullName}" th:value="${el.fullName}" name="fullName" placeholder="Введите полное имя" class="form-control" >
-        <ul>
-          <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}" class="error"></li>
-        </ul>
+  <h1>Редактирование/добавление автора</h1>
+  <form action="/library/author/edit"
+        method="post"
+        modelAttribute="author"
+        th:object="${author}">
+    <div>
+      <input  type="text" th:field="*{fullName}" name = "fullName" placeholder="Введите полное имя" class="form-control">
+      <ul>
+        <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}" class="error"/>
+      </ul>
+    </div>
+    <div>
+      <div class="input-group date">
+        <input type="text" th:field="*{birth}" name="birth" placeholder="Введите дату рождения" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
       </div>
-      <div>
-        <input type="text" th:field="*{birth}" th:value="${#dates.format(el.birth, 'dd.MM.yyyy')}" name="birth" placeholder="Введите дату рождения" class="form-control">
-        <ul>
-          <li th:each="err : ${#fields.errors('birth')}" th:text="${err}" class="error"></li>
-        </ul>
-      </div>
-      <div>
-        <textarea th:field="*{biography}" name="biography" placeholder="Введите биографию" class="form-control" th:text="${el.biography}"/>
-        <ul>
-          <li th:each="err : ${#fields.errors('biography')}" th:text="${err}" class="error"></li>
-        </ul>
-      </div>
-      <button type="submit" class="btn btn-success">Обновить</button>
-    </form>
-  </div>
+      <ul>
+        <li th:each="err : ${#fields.errors('birth')}" th:text="${err}" class="error"/>
+      </ul>
+    </div>
+    <div>
+      <textarea th:field="*{biography}" name="biography" placeholder="Введите биографию" class="form-control"></textarea>
+      <ul>
+        <li th:each="err : ${#fields.errors('biography')}" th:text="${err}" class="error"></li>
+      </ul>
+    </div>
+    <input  type="hidden" th:field="*{guid}" name = "guid" placeholder="guid" class="form-control">
+    <button type="submit" class="btn btn-success">Сохранить</button>
+  </form>
 </div>
 <footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>

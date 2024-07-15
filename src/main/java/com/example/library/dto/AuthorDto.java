@@ -14,12 +14,14 @@ import org.hibernate.validator.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class AuthorDto {
+    private UUID guid;
     @NotEmpty
     @Size(min = 5, max = 50)
     private String fullName;
@@ -28,6 +30,5 @@ public class AuthorDto {
     @Pattern(regexp = "(^0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[0-2]).(\\d{4}$)", message = "{datetime.format.error}")
     private String birth;
     @NotEmpty
-    @Min(value = 5, message = "размер должно быть не меньше 5")
     private String biography;
 }

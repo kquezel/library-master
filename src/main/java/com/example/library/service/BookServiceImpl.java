@@ -1,12 +1,11 @@
 package com.example.library.service;
 
+import com.example.library.dto.BookDto;
 import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,17 +39,22 @@ public class BookServiceImpl implements BookService {
     public Optional<Book> findById(long id) { return bookRepository.findById(id);}
 
     @Override
-    public Book update(Long bookId, String name, String publication,
-                       String genre, String author) throws ParseException {
-        Book book = bookRepository.findById(bookId).get();
-        Date publicationDate = dateFormat.get().parse(publication);
-        Optional<Author> authorId = authorService.findById(Long.parseLong(author));
-        book.setName(name);
+    public void update(BookDto bookDto) throws ParseException {
+        Book book;
+        Date publicationDate = dateFormat.get().parse(bookDto.getPublication());
+        long id = 0;
+        if (bookDto.getGuid() != null && !bookDto.getGuid().isEmpty()) {
+            id = Long.parseLong(bookDto.getGuid());
+        }
+        book = bookRepository.findById(id).orElseGet(Book::new);
+        Optional<Author> author = authorService.findById(Long.parseLong(bookDto.getAuthor()));
+        book.setName(bookDto.getName());
         book.setPublication(publicationDate);
-        book.setGenre(genre);
-        book.setAuthor(authorId.get());
-        return bookRepository.save(book);
+        book.setGenre(bookDto.getGenre());
+        book.setAuthor(author.get());
+        bookRepository.save(book);
     }
+
 
     @Override
     public boolean delete(long id) {
@@ -64,4 +68,5 @@ public class BookServiceImpl implements BookService {
     public List<Book> findbyKeyword(String keyword) {
         return bookRepository.findByKeyword(keyword);
     }
+
 }

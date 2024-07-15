@@ -1,6 +1,7 @@
 package com.example.library;
 
 import com.example.library.dto.UserDto;
+import com.example.library.model.User;
 import com.example.library.model.enums.Role;
 import com.example.library.service.UsersService;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +23,6 @@ public class LibraryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryApplication.class, args);
 	}
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.dto.AuthorDto;
 import com.example.library.model.Author;
 
 import java.text.ParseException;
@@ -16,4 +17,5 @@ public interface AuthorService {
 
     List<Author> findbyKeyword(String keyword);
 
+    void update(AuthorDto authorDto) throws ParseException;
 }

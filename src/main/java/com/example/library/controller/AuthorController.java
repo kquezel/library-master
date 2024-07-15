@@ -51,55 +51,31 @@ public class  AuthorController {
         return "author-details";
     }
 
-    @GetMapping("/author/add")
-    public String authorAdd(Model model) {
-        AuthorDto newAuthor = new AuthorDto();
-        model.addAttribute("author", newAuthor);
-        return "author-add";
-    }
-
-    @PostMapping("/author/add")
-    public String authorPostAdd(@Valid @ModelAttribute("author") AuthorDto newAuthor,BindingResult result,
-                                 Model model) throws ParseException {
-        if(result.hasErrors()) {
-            model.addAttribute("newAuthor", newAuthor);
-            return "author-add";
-        }
-        Date birthDate = dateFormat.get().parse(newAuthor.getBirth());
-        Author author = new Author(newAuthor.getFullName(), birthDate, newAuthor.getBiography());
-        authorService.create(author);
-
-        return "redirect:/library/author";
-
-    }
 
     @GetMapping("/author/{id}/edit")
     public String getAuthorEdit(@PathVariable(value = "id") Long id, Model model) {
-        AuthorDto newAuthor = new AuthorDto();
+        AuthorDto authorDto = new AuthorDto();
         Optional<Author> authorOptional = authorService.findById(id);
-        if(authorOptional.isPresent()) {
+        if (authorOptional.isPresent()){
             Author author = authorOptional.get();
-            model.addAttribute("authorAdd", author);
-            return "author-edit";
+            authorDto.setGuid(author.getGuid());
+            authorDto.setBirth(dateFormat.get().format(author.getBirth()));
+            authorDto.setFullName(author.getFullName());
+            authorDto.setBiography(author.getBiography());
         }
-
-        model.addAttribute("author", newAuthor);
-        return "author-add";
+        model.addAttribute("author", authorDto);
+        return "author-edit";
     }
-    @PostMapping("/author/{id}/edit")
-    public String authorPostUpdate(@Valid @ModelAttribute("author") AuthorDto newAuthor,BindingResult result,
-                                   @PathVariable(value = "id") Long id, @RequestParam String fullName,
-                                   @RequestParam String birth,
-                                   @RequestParam String biography, Model model) throws ParseException {
-        if(result.hasErrors()) {
-            model.addAttribute("newAuthor", newAuthor);
+
+    @PostMapping("/author/edit")
+    public String authorPostAdd(@Valid @ModelAttribute("author") AuthorDto authorDto, BindingResult result, Model model)
+            throws ParseException {
+        if (result.hasErrors()){
+            model.addAttribute("author", authorDto);
             return "author-edit";
         }
-        Author authorId = authorService.findById(id).orElseThrow();
-        Author author = authorService.update(authorId.getId(), fullName, birth, biography);
-        model.addAttribute("author", author);
-        model.addAttribute("result", "Success update");
-        return "author-details";
+        authorService.update(authorDto);
+        return "redirect:/library/author";
     }
 
 //    @GetMapping("/author/{id}/edit")

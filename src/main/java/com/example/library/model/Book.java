@@ -2,12 +2,15 @@ package com.example.library.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
 
 @Entity
+@Builder
 @Table(name = "book")
 public class Book {
     @Id

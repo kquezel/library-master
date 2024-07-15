@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.dto.AuthorDto;
 import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.repository.AuthorRepository;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -57,5 +59,26 @@ public class AuthorServiceImpl implements AuthorService {
 
     public List<Author> findbyKeyword(String keyword) {
         return authorRepository.findByKeyword(keyword);
+    }
+
+    @Override
+    public void update(AuthorDto authorDto) throws ParseException {
+        Author author;
+        Date birthDate = dateFormat.get().parse(authorDto.getBirth());
+        long id = 0;
+        if (authorDto.getGuid() != null) {
+            id = Long.parseLong(String.valueOf(authorDto.getGuid()));
+        }
+        author = authorRepository.findById(id).orElseGet(Author::new);
+        Author authorUuid = authorRepository.findByUuid(authorDto.getGuid());
+        author.setFullName(authorDto.getFullName());
+        author.setBirth(birthDate);
+        author.setBiography(authorDto.getBiography());
+        if(author.getGuid() == null) {
+            author.setGuid(UUID.randomUUID());
+        } else {
+            author.setGuid(authorUuid.getGuid());
+        }
+        authorRepository.save(author);
     }
 }

@@ -82,44 +82,21 @@ public class BookController {
     }
 
 
-    @GetMapping("/book/add")
-    public String bookAdd(Model model) {
-        BookDto newBook = new BookDto();
-        model.addAttribute("book", newBook);
-        model.addAttribute("authors", authorService.findAll());
-        return "book-add";
-    }
-
-    @PostMapping("/book/add")
-    public String bookPostAdd(@Valid @ModelAttribute("book") BookDto newBook, BindingResult result, @RequestParam String name, @RequestParam String publication, @RequestParam String genre,
-                              @RequestParam String author, Model model) throws ParseException {
-        if(result.hasErrors()) {
-            model.addAttribute("newBook", newBook);
-            return "book-add";
-        }
-        Date publicationDate = dateFormat.get().parse(publication);
-        Optional<Author> id = authorService.findById(Long.parseLong(author));
-        if (id.isPresent()) {
-            Book book = new Book(name, publicationDate, genre);
-            book.setAuthor(id.get());
-            bookService.create(book);
-        }
-        return "redirect:/library/book";
-    }
-
     @GetMapping("/book/{id}/edit")
     public String getBookEdit(@PathVariable(value = "id") Long id, Model model) {
-        BookDto newBook = new BookDto();
+        BookDto bookDto = new BookDto();
         Optional<Book> bookOptional = bookService.findById(id);
         if(bookOptional.isPresent()) {
             Book book = bookOptional.get();
-            model.addAttribute("authors", authorService.findAll());
-            model.addAttribute("book", book);
-            return "book-edit";
+            bookDto.setGuid(book.getId().toString());
+            bookDto.setName(book.getName());
+            bookDto.setGenre(book.getGenre());
+            bookDto.setPublication(dateFormat.get().format(book.getPublication()));
+            bookDto.setAuthor(String.valueOf(book.getAuthor()));
         }
 
-        model.addAttribute("book", newBook);
-        return "book-add";
+        model.addAttribute("book", bookDto);
+        return "book-edit";
 
 //        ArrayList<Book> books = new ArrayList<>();
 //        book.ifPresent(books::add);
@@ -127,19 +104,15 @@ public class BookController {
 //        return "book-edit";
     }
 
-    @PostMapping("/book/{id}/edit")
-    public String bookPostUpdate(@PathVariable(value = "id") Long bookId, @RequestParam String name, @RequestParam String publication, @RequestParam String genre,
-                                 @RequestParam String author, Model model) throws ParseException {
-        Optional<Author> authorId = authorService.findById(Long.parseLong(author));
-        boolean result;
-        if (authorId.isPresent()) {
-            Book book = bookService.update(bookId, name, publication, genre, author);
-            model.addAttribute("book", book);
-            result = true;
-        } else { result = false; }
-
-        model.addAttribute("result", result);
-        return "book-details";
+    @PostMapping("/book/edit")
+    public String bookPostUpdate(@Valid @ModelAttribute("book") BookDto bookDto, BindingResult result,
+                                 Model model) throws ParseException {
+        if (result.hasErrors()){
+            model.addAttribute("book", bookDto);
+            return "book-edit";
+        }
+        bookService.update(bookDto);
+        return "redirect:/library/book";
     }
 
     @PostMapping("/book/{id}/remove")
