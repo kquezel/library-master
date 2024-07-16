@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 //@Builder
@@ -30,6 +31,8 @@ public class Book {
 
     @Column(name = "genre")
     private String genre;
+
+    private UUID guid;
 
 
 
@@ -54,6 +57,13 @@ public class Book {
 
     }
 
+    public UUID getGuid() {
+        return guid;
+    }
+
+    public void setGuid(UUID guid) {
+        this.guid = guid;
+    }
 
     public User getUser() {
         return user;

@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -19,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class BookDto {
-    private String guid;
+    private UUID guid;
     @NotEmpty
     @Size(min = 5, max = 50)
     private String name;

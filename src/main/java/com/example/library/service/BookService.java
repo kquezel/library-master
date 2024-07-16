@@ -19,5 +19,5 @@ public interface BookService {
 
     List<Book> findbyKeyword(String keyword);
 
-    BookDto update(BookDto bookDto) throws ParseException;
+    void update(BookDto bookDto) throws ParseException;
 }

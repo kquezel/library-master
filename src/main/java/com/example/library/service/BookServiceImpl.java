@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -41,28 +42,25 @@ public class BookServiceImpl implements BookService {
     public Optional<Book> findById(long id) { return bookRepository.findById(id);}
 
     @Override
-    public BookDto update(BookDto bookDto) throws ParseException {
+    public void update(BookDto bookDto) throws ParseException {
         Book book;
         Date publicationDate = dateFormat.get().parse(bookDto.getPublication());
-        long id = 0;
-        if (bookDto.getGuid() != null && !bookDto.getGuid().isEmpty()) {
-            id = Long.parseLong(bookDto.getGuid());
+        UUID id = null;
+        if (bookDto.getGuid() != null) {
+            id = bookDto.getGuid();
         }
-        book = bookRepository.findById(id).orElseGet(Book::new);
+        book = bookRepository.findByUuid(id).orElseGet(Book::new);
         Optional<Author> author = authorService.findById(bookDto.getAuthor().getId());
         book.setName(bookDto.getName());
         book.setPublication(publicationDate);
         book.setGenre(bookDto.getGenre());
         book.setAuthor(author.get());
-
-        Book newBook = bookRepository.save(book);
-
-        BookDto newBookDto = new BookDto();
-        newBookDto.setName(newBook.getName());
-        newBookDto.setPublication(newBook.getPublication().toString());
-        newBookDto.setGenre(newBook.getGenre());
-        newBookDto.setAuthor(newBook.getAuthor());
-        return newBookDto;
+        if(book.getGuid() == null) {
+            book.setGuid(UUID.randomUUID());
+        } else {
+            book.setGuid(bookDto.getGuid());
+        }
+        bookRepository.save(book);
     }
 
 

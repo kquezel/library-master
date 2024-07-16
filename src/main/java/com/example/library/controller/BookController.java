@@ -88,7 +88,7 @@ public class BookController {
         Optional<Book> bookOptional = bookService.findById(id);
         if(bookOptional.isPresent()) {
             Book book = bookOptional.get();
-            bookDto.setGuid(book.getId().toString());
+            bookDto.setGuid(book.getGuid());
             bookDto.setName(book.getName());
             bookDto.setGenre(book.getGenre());
             bookDto.setPublication(dateFormat.get().format(book.getPublication()));
