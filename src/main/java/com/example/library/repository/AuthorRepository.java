@@ -17,6 +17,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long>  {
 //    @Query(value="SELECT * FROM aut n WHERE n.uuid= ?1")
 //    @Query(value = "SELECT * from author where guid.uuid=?1")
     @Query(value="SELECT * FROM author WHERE author.guid=?1", nativeQuery=true)
-    Author findByUuid(UUID guid);
+    Optional<Author> findByUuid(UUID guid);
 
 }

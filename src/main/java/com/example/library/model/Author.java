@@ -21,6 +21,7 @@ public class Author {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "birth")
     private Date birth;
 
     @Column(name = "biography")

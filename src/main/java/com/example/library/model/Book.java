@@ -2,7 +2,9 @@ package com.example.library.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -10,7 +12,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
-@Builder
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Table(name = "book")
 public class Book {
     @Id
@@ -47,6 +51,7 @@ public class Book {
     }
 
     public Book() {
+
     }
 
 

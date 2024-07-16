@@ -5,6 +5,7 @@ import com.example.library.model.Author;
 import com.example.library.model.Book;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -18,5 +19,5 @@ public interface BookService {
 
     List<Book> findbyKeyword(String keyword);
 
-    void update(BookDto bookDto) throws ParseException;
+    BookDto update(BookDto bookDto) throws ParseException;
 }

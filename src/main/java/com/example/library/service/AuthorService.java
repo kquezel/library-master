@@ -11,8 +11,8 @@ public interface AuthorService {
     void create(Author author);
     List<Author> findAll();
     Optional<Author> findById(long id);
-    Author update(Long authorId, String fullName, String birth,
-                  String biography) throws ParseException;
+//    Author update(Long authorId, String fullName, String birth,
+//                  String biography) throws ParseException;
     boolean delete(long id);
 
     List<Author> findbyKeyword(String keyword);

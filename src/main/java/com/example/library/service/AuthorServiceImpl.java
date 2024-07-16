@@ -36,17 +36,17 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Optional<Author> findById(long id) { return authorRepository.findById(id);}
 
-    @Override
-    public Author update(Long authorId, String fullName, String birth,
-                         String biography) throws ParseException {
-        Author author = authorRepository.findById(authorId).get();
-        Date birthDate = dateFormat.get().parse(birth);
-        author.setFullName(fullName);
-        author.setBirth(birthDate);
-        author.setBiography(biography);
-
-        return authorRepository.save(author);
-    }
+//    @Override
+//    public Author update(Long authorId, String fullName, String birth,
+//                         String biography) throws ParseException {
+//        Author author = authorRepository.findById(authorId).get();
+//        Date birthDate = dateFormat.get().parse(birth);
+//        author.setFullName(fullName);
+//        author.setBirth(birthDate);
+//        author.setBiography(biography);
+//
+//        return authorRepository.save(author);
+//    }
 
     @Override
     public boolean delete(long id) {
@@ -65,19 +65,18 @@ public class AuthorServiceImpl implements AuthorService {
     public void update(AuthorDto authorDto) throws ParseException {
         Author author;
         Date birthDate = dateFormat.get().parse(authorDto.getBirth());
-        long id = 0;
-        if (authorDto.getGuid() != null) {
-            id = Long.parseLong(String.valueOf(authorDto.getGuid()));
+        UUID id = null;
+        if (authorDto.getGuid() != null ) {
+            id = authorDto.getGuid();
         }
-        author = authorRepository.findById(id).orElseGet(Author::new);
-        Author authorUuid = authorRepository.findByUuid(authorDto.getGuid());
+        author = authorRepository.findByUuid(id).orElseGet(Author::new);
         author.setFullName(authorDto.getFullName());
         author.setBirth(birthDate);
         author.setBiography(authorDto.getBiography());
         if(author.getGuid() == null) {
             author.setGuid(UUID.randomUUID());
         } else {
-            author.setGuid(authorUuid.getGuid());
+            author.setGuid(authorDto.getGuid());
         }
         authorRepository.save(author);
     }

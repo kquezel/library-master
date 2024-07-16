@@ -63,7 +63,7 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/add-book")
-    public String userAddBook(Principal principal, @PathVariable(value = "id") Long id) {
+    public String userAddBook(Principal principal, @PathVariable(value = "id") Long id) throws ParseException {
         User user = usersService.findUser(principal.getName());
         Optional<Book> optBook = bookService.findById(id);
         Book book = optBook.get();
@@ -73,7 +73,7 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}/return-book")
-    public String userReturnBook(@PathVariable(value = "id") Long id) {
+    public String userReturnBook(@PathVariable(value = "id") Long id, Principal principal) throws ParseException {
         Optional<Book> optBook = bookService.findById(id);
         Book book = optBook.get();
         book.setUserNULL();
@@ -83,7 +83,7 @@ public class BookController {
 
 
     @GetMapping("/book/{id}/edit")
-    public String getBookEdit(@PathVariable(value = "id") Long id, Model model) {
+    public String getBookEdit(@PathVariable(value = "id") Long id, Model model) throws ParseException {
         BookDto bookDto = new BookDto();
         Optional<Book> bookOptional = bookService.findById(id);
         if(bookOptional.isPresent()) {
@@ -92,10 +92,11 @@ public class BookController {
             bookDto.setName(book.getName());
             bookDto.setGenre(book.getGenre());
             bookDto.setPublication(dateFormat.get().format(book.getPublication()));
-            bookDto.setAuthor(String.valueOf(book.getAuthor()));
+            bookDto.setAuthor(book.getAuthor());
         }
 
         model.addAttribute("book", bookDto);
+        model.addAttribute("authors", authorService.findAll());
         return "book-edit";
 
 //        ArrayList<Book> books = new ArrayList<>();
@@ -109,6 +110,7 @@ public class BookController {
                                  Model model) throws ParseException {
         if (result.hasErrors()){
             model.addAttribute("book", bookDto);
+            model.addAttribute("authors", authorService.findAll());
             return "book-edit";
         }
         bookService.update(bookDto);
