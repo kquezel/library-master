@@ -9,13 +9,11 @@ import java.util.Optional;
 
 public interface AuthorService {
     void create(Author author);
-    List<Author> findAll();
+    List<Author> findAll(int pageNo, int pageSize);
     Optional<Author> findById(long id);
-//    Author update(Long authorId, String fullName, String birth,
-//                  String biography) throws ParseException;
     boolean delete(long id);
 
-    List<Author> findbyKeyword(String keyword);
+    List<Author> findByKeyword(String keyword);
 
     void update(AuthorDto authorDto) throws ParseException;
 }

@@ -2,20 +2,20 @@ package com.example.library.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "book")
 public class Book {
     @Id
@@ -47,73 +47,11 @@ public class Book {
     @JoinColumn(name="author_id", nullable=false)
     private Author author;
 
-    public Book(String name, Date publication, String genre) {
+    public Book(String name, Date publication, String genre, Author author) {
         this.name= name;
         this.publication = publication;
         this.genre = genre;
-    }
-
-    public Book() {
-
-    }
-
-    public UUID getGuid() {
-        return guid;
-    }
-
-    public void setGuid(UUID guid) {
-        this.guid = guid;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-
         this.author = author;
-
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getPublication() {
-        return publication;
-    }
-
-    public void setPublication(Date publication) {
-        this.publication = publication;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public void setUserNULL() {

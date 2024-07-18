@@ -2,9 +2,11 @@ package com.example.library.service;
 
 import com.example.library.dto.AuthorDto;
 import com.example.library.model.Author;
-import com.example.library.model.Book;
 import com.example.library.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -29,24 +31,16 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Author> findAll() {
-        return authorRepository.findAll();
+    public List<Author> findAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Author> authors = authorRepository.findAll(pageable);
+        return authors.getContent();
+
     }
 
     @Override
     public Optional<Author> findById(long id) { return authorRepository.findById(id);}
 
-//    @Override
-//    public Author update(Long authorId, String fullName, String birth,
-//                         String biography) throws ParseException {
-//        Author author = authorRepository.findById(authorId).get();
-//        Date birthDate = dateFormat.get().parse(birth);
-//        author.setFullName(fullName);
-//        author.setBirth(birthDate);
-//        author.setBiography(biography);
-//
-//        return authorRepository.save(author);
-//    }
 
     @Override
     public boolean delete(long id) {
@@ -57,19 +51,18 @@ public class AuthorServiceImpl implements AuthorService {
         return false;
     }
 
-    public List<Author> findbyKeyword(String keyword) {
+    public List<Author> findByKeyword(String keyword) {
         return authorRepository.findByKeyword(keyword);
     }
 
     @Override
     public void update(AuthorDto authorDto) throws ParseException {
-        Author author;
         Date birthDate = dateFormat.get().parse(authorDto.getBirth());
-        UUID id = null;
-        if (authorDto.getGuid() != null ) {
-            id = authorDto.getGuid();
-        }
-        author = authorRepository.findByUuid(id).orElseGet(Author::new);
+//        UUID uuid = null;
+//        if (authorDto.getGuid() != null ) {
+//            uuid = authorDto.getGuid();
+//        }
+        Author author = authorRepository.findByUuid(authorDto.getGuid()).orElseGet(Author::new);
         author.setFullName(authorDto.getFullName());
         author.setBirth(birthDate);
         author.setBiography(authorDto.getBiography());

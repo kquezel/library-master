@@ -1,15 +1,15 @@
 package com.example.library.controller;
 
-import com.example.library.dto.AuthorDto;
 import com.example.library.dto.BookDto;
-import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.model.User;
+import com.example.library.repository.BookRepository;
 import com.example.library.service.AuthorService;
 import com.example.library.service.BookService;
 import com.example.library.service.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,23 +35,32 @@ public class BookController {
     AuthorService authorService;
     @Autowired
     UsersService usersService;
+    @Autowired
+    private BookRepository bookRepository;
 
     @GetMapping("/book")
     public String getAllBooks(Model model, Principal principal, String keyword) {
         User user = usersService.findUser(principal.getName());
         List<Book> books = bookService.findAll();
 
+//        Pageable firstPageWithTwoElements = PageRequest.of(0, 2, Sort.by("fullName").descending());
+//
+//        Page<Book> pageBook = bookRepository.findAll(firstPageWithTwoElements);
+
         model.addAttribute("users", user);
         books.sort((s1, s2) -> CharSequence.compare(s1.getName(), s2.getName()));
 
+
+
         if(keyword != null) {
-            model.addAttribute("books", bookService.findbyKeyword(keyword));
+            model.addAttribute("books", bookService.findByKeyword(keyword));
         }
         else {
             model.addAttribute("books", books);
         }
         return "book-main";
     }
+
 
     @GetMapping("/book/{id}")
     public String getABookById(@PathVariable(value = "id") Long id, Model model) {
@@ -92,17 +101,14 @@ public class BookController {
             bookDto.setName(book.getName());
             bookDto.setGenre(book.getGenre());
             bookDto.setPublication(dateFormat.get().format(book.getPublication()));
-            bookDto.setAuthor(book.getAuthor());
+            bookDto.setAuthorId(book.getAuthor().getId());
         }
 
         model.addAttribute("book", bookDto);
-        model.addAttribute("authors", authorService.findAll());
+//        model.addAttribute("authors", authorService.findAll());
+//        model.addAttribute("pageTitle", "Добавление книги");
         return "book-edit";
 
-//        ArrayList<Book> books = new ArrayList<>();
-//        book.ifPresent(books::add);
-
-//        return "book-edit";
     }
 
     @PostMapping("/book/edit")
@@ -110,10 +116,12 @@ public class BookController {
                                  Model model) throws ParseException {
         if (result.hasErrors()){
             model.addAttribute("book", bookDto);
-            model.addAttribute("authors", authorService.findAll());
+//            model.addAttribute("authors", authorService.findAll());
+            model.addAttribute("pageTitle", "Редактирование книги");
             return "book-edit";
         }
         bookService.update(bookDto);
+
         return "redirect:/library/book";
     }
 

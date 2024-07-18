@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,12 +34,18 @@ public class  AuthorController {
 
 
     @GetMapping("/author")
-    public String getAllAuthors(Model model, String keyword) {
+    public String getAllAuthors(Model model, String keyword,
+                                @RequestParam(value="pageNo", defaultValue = "0", required = false) int pageNo,
+                                @RequestParam(value="pageSize", defaultValue = "1", required = false) int pageSize) {
+
         if(keyword != null) {
-            model.addAttribute("authors", authorService.findbyKeyword(keyword));
+            model.addAttribute("authors", authorService.findByKeyword(keyword));
         }
         else {
-            model.addAttribute("authors", authorService.findAll());
+//            model.addAttribute("pageNo", pageNo);
+//            model.addAttribute("pageSize", pageSize);
+
+            model.addAttribute("authors", authorService.findAll(pageNo, pageSize));
         }
         return "author-main";
     }
@@ -77,38 +85,6 @@ public class  AuthorController {
         authorService.update(authorDto);
         return "redirect:/library/author";
     }
-
-//    @GetMapping("/author/{id}/edit")
-//    public String getAuthorEdit(@PathVariable(value = "id") Long id, Model model) {
-//        AuthorDto newAuthor = new AuthorDto();
-//        Optional<Author> authorOptional = authorService.findById(id);
-//
-//        if(authorOptional.isPresent()) {
-//            Author author = authorOptional.get();
-//            newAuthor.setFullName(author.getFullName());
-//            newAuthor.setBirth(String.valueOf(author.getBirth()));
-//            newAuthor.setBiography(author.getBiography());
-//            model.addAttribute("author", author);
-//            return "author-add";
-//        }
-//        model.addAttribute("author", newAuthor);
-//        return "author-add";
-//    }
-//    @PostMapping("/author/{id}/edit")
-//    public String authorPostUpdate(@Valid @ModelAttribute("author") AuthorDto newAuthor, BindingResult result,
-//                                   @PathVariable(value = "id") Long id, @RequestParam String fullName,
-//                                   @RequestParam String birth, @RequestParam String biography, Model model)
-//            throws ParseException {
-//        if(result.hasErrors()) {
-//            model.addAttribute("newAuthor", newAuthor);
-//            return "author-edit";
-//        }
-//        Author authorId = authorService.findById(id).orElseThrow();
-//        Author author = authorService.update(authorId.getId(), fullName, birth, biography);
-//        model.addAttribute("author", author);
-//        model.addAttribute("result", "Success update");
-//        return "author-details";
-//    }
 
     @PostMapping("/author/{id}/remove")
     public String authorPostDelete(@PathVariable(value = "id") Long id) {

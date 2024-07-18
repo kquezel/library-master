@@ -3,6 +3,8 @@ package com.example.library.service;
 import com.example.library.dto.BookDto;
 import com.example.library.model.Author;
 import com.example.library.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -17,7 +19,7 @@ public interface BookService {
     Optional<Book> findById(long id);
     boolean delete(long id);
 
-    List<Book> findbyKeyword(String keyword);
+    List<Book> findByKeyword(String keyword);
 
     void update(BookDto bookDto) throws ParseException;
 }

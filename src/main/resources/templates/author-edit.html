@@ -14,7 +14,7 @@
     <div>
       <input  type="text" th:field="*{fullName}" name = "fullName" placeholder="Введите полное имя" class="form-control">
       <ul>
-        <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}" class="error"/>
+        <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}" class="alert alert-danger"/>
       </ul>
     </div>
     <div>
@@ -22,13 +22,13 @@
         <input type="text" th:field="*{birth}" name="birth" placeholder="Введите дату рождения" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
       </div>
       <ul>
-        <li th:each="err : ${#fields.errors('birth')}" th:text="${err}" class="error"/>
+        <li th:each="err : ${#fields.errors('birth')}" th:text="${err}" class="alert alert-danger"/>
       </ul>
     </div>
     <div>
       <textarea th:field="*{biography}" name="biography" placeholder="Введите биографию" class="form-control"></textarea>
       <ul>
-        <li th:each="err : ${#fields.errors('biography')}" th:text="${err}" class="error"></li>
+        <li th:each="err : ${#fields.errors('biography')}" th:text="${err}" class="alert alert-danger"></li>
       </ul>
     </div>
     <input  type="hidden" th:field="*{guid}" name = "guid" placeholder="guid" class="form-control">

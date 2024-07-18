@@ -29,14 +29,25 @@
         <p th:text="${book.genre}"/>
         <a th:href="'/library/book/' + ${book.id}" class="btn btn-warning">Подробнее</a>
         <p th:each="auth : ${userinfo}" th:text="auth"></p>
-        <p class="notification" th:each="user : ${users}" th:if="NULL != ${book.user}" th:unless="${user} == ${book.user}">Нет в наличии</p>
-        <form class="notification" th:unless="NULL != ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/add-book'" method="post">
+        <p class="notification" th:each="user : ${users}" th:if="NULL != ${book.user}"
+           th:unless="${user} == ${book.user}">Нет в наличии</p>
+        <form class="notification" th:unless="NULL != ${book.user}" action="#"
+              th:action="'/library/book/'+${book.id}+'/add-book'" method="post">
             <button name="action" type="submit" class="btn btn-success">Взять книгу</button>
         </form>
-        <form class="notification" th:each="user : ${users}" th:if="${user} == ${book.user}" action="#" th:action="'/library/book/'+${book.id}+'/return-book'" method="post">
-            <button name="action" th:value="userAddBook" type="submit" class="btn btn-success">Вернуть книгу</button>
+        <form class="notification" th:each="user : ${users}" th:if="${user} == ${book.user}"
+              action="#" th:action="'/library/book/'+${book.id}+'/return-book'" method="post">
+            <button name="action" type="submit" class="btn btn-success">Вернуть книгу</button>
         </form>
     </div>
+<!--    <div>-->
+<!--        <select>-->
+<!--            <option th:action="'/library/book/'+${offset == 0} + ${pageBooks == 1}">1</option>-->
+<!--            <option th:action="'/library/book/'+${offset == 0} + ${pageBooks == 2}">2</option>-->
+<!--            <option th:action="'/library/book/'+${offset == 0} + ${pageBooks == 5}">5</option>-->
+<!--        </select>-->
+<!--        <button type="submit">Сортировать</button>-->
+<!--    </div>-->
 
 
 </div>

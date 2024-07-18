@@ -9,6 +9,7 @@
         float: right;
     }
 </style>
+
 <header th:insert="~{hf/header.html :: header}"></header>
 
 <div class="container mt-5">
@@ -27,6 +28,14 @@
         <a th:href="'/library/author/' + ${el.id}" class="btn btn-warning">Подробнее</a>
     </div>
 </div>
+
+
+<!--<form th:action="@{/library/author}" method="get">-->
+<!--    <input type="submit" th:href="@{/library/author(pageNo=${pageNo + 1})}"-->
+<!--           value="Показать больше" class="btn btn-success">-->
+<!--</form>-->
+
+
 <footer th:insert="~{hf/footer.html :: footer}"></footer>
 </body>
 </html>

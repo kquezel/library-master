@@ -6,6 +6,10 @@ import com.example.library.model.Book;
 import com.example.library.model.User;
 import com.example.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -38,19 +42,16 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll();
     }
 
+
     @Override
     public Optional<Book> findById(long id) { return bookRepository.findById(id);}
 
     @Override
     public void update(BookDto bookDto) throws ParseException {
-        Book book;
         Date publicationDate = dateFormat.get().parse(bookDto.getPublication());
-        UUID id = null;
-        if (bookDto.getGuid() != null) {
-            id = bookDto.getGuid();
-        }
-        book = bookRepository.findByUuid(id).orElseGet(Book::new);
-        Optional<Author> author = authorService.findById(bookDto.getAuthor().getId());
+
+        Book book = bookRepository.findByUuid(bookDto.getGuid()).orElseGet(Book::new);
+        Optional<Author> author = authorService.findById(bookDto.getAuthorId());
         book.setName(bookDto.getName());
         book.setPublication(publicationDate);
         book.setGenre(bookDto.getGenre());
@@ -73,7 +74,7 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
-    public List<Book> findbyKeyword(String keyword) {
+    public List<Book> findByKeyword(String keyword) {
         return bookRepository.findByKeyword(keyword);
     }
 

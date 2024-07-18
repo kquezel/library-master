@@ -32,8 +32,6 @@ public class BookDto {
     @NotEmpty
     private String genre;
 
-    private Author author;
-
-    private User user;
+    private Long authorId;
 
 }

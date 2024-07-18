@@ -36,8 +36,8 @@ public class UsersController {
     @GetMapping("/user")
     public String getAllUsers(Model model) {
         List<User> users = usersService.findAll();
-        List<Book> book = bookService.findAll();
-        model.addAttribute("books", book);
+//        List<Book> book = bookService.findAll();
+//        model.addAttribute("books", book);
         model.addAttribute("users", users);
         return "user-main";
     }
@@ -63,7 +63,7 @@ public class UsersController {
         ArrayList<User> users = new ArrayList<>();
         user.ifPresent(users::add);
         model.addAttribute("user", users);
-        model.addAttribute("books", bookService.findAll());
+//        model.addAttribute("books", bookService.findAll());
         return "user-edit";
     }
     @PostMapping("/user/{id}/edit")
