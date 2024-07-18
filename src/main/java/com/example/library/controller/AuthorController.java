@@ -2,12 +2,17 @@ package com.example.library.controller;
 
 import com.example.library.dto.AuthorDto;
 import com.example.library.dto.BookDto;
+import com.example.library.dto.PageRequestDto;
 import com.example.library.model.Author;
 import com.example.library.model.Book;
+import com.example.library.repository.AuthorRepository;
 import com.example.library.service.AuthorService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,25 +35,40 @@ public class  AuthorController {
             ThreadLocal.withInitial(() -> new SimpleDateFormat("dd.MM.yyyy"));
     @Autowired
     AuthorService authorService;
-
+    @Autowired
+    private AuthorRepository authorRepository;
 
 
     @GetMapping("/author")
     public String getAllAuthors(Model model, String keyword,
-                                @RequestParam(value="pageNo", defaultValue = "0", required = false) int pageNo,
-                                @RequestParam(value="pageSize", defaultValue = "1", required = false) int pageSize) {
+                                @RequestParam(value="pageSize", defaultValue = "1", required = false) int pageSize,
+                                @RequestParam(value="pageNo", defaultValue = "0", required = false) int pageNo) {
+
+
 
         if(keyword != null) {
             model.addAttribute("authors", authorService.findByKeyword(keyword));
         }
         else {
 //            model.addAttribute("pageNo", pageNo);
-//            model.addAttribute("pageSize", pageSize);
 
             model.addAttribute("authors", authorService.findAll(pageNo, pageSize));
         }
+
+        Page<Author> pageMax = authorService.findAll(pageNo, pageSize);
+
+        model.addAttribute("pageNo", pageNo);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("pageNoMax", pageMax.getTotalPages());
         return "author-main";
     }
+
+//    @PostMapping("/author")
+//    public String postAllAuthors(Model model) {
+//        pageNo++;
+//        model.addAttribute("pageNo", pageNo);
+//        return "redirect:/library/author";
+//    }
 
     @GetMapping("/author/{id}")
     public String getAuthorById(@PathVariable(value = "id") Long id, Model model) {

@@ -31,12 +31,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Author> findAll(int pageNo, int pageSize) {
+    public Page<Author> findAll(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Author> authors = authorRepository.findAll(pageable);
-        return authors.getContent();
+        return authors;
 
     }
+
+//    @Override
+//    public Page<Author> findAll(Pageable pageable) {
+//        return authorRepository.findAll(pageable);
+//    }
 
     @Override
     public Optional<Author> findById(long id) { return authorRepository.findById(id);}

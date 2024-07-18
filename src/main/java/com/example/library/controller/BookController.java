@@ -1,8 +1,10 @@
 package com.example.library.controller;
 
 import com.example.library.dto.BookDto;
+import com.example.library.model.Author;
 import com.example.library.model.Book;
 import com.example.library.model.User;
+import com.example.library.repository.AuthorRepository;
 import com.example.library.repository.BookRepository;
 import com.example.library.service.AuthorService;
 import com.example.library.service.BookService;
@@ -10,6 +12,7 @@ import com.example.library.service.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +40,8 @@ public class BookController {
     UsersService usersService;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @GetMapping("/book")
     public String getAllBooks(Model model, Principal principal, String keyword) {
@@ -105,7 +110,7 @@ public class BookController {
         }
 
         model.addAttribute("book", bookDto);
-//        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("authors", authorRepository.findAll());
 //        model.addAttribute("pageTitle", "Добавление книги");
         return "book-edit";
 
@@ -116,7 +121,7 @@ public class BookController {
                                  Model model) throws ParseException {
         if (result.hasErrors()){
             model.addAttribute("book", bookDto);
-//            model.addAttribute("authors", authorService.findAll());
+            model.addAttribute("authors", authorRepository.findAll());
             model.addAttribute("pageTitle", "Редактирование книги");
             return "book-edit";
         }

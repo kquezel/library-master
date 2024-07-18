@@ -28,6 +28,35 @@
         <a th:href="'/library/author/' + ${el.id}" class="btn btn-warning">Подробнее</a>
     </div>
 </div>
+<form th:if="${pageNo} < ${pageNoMax-1}" th:action="@{/library/author}" method="get">
+    <input type="hidden" name="pageNo" th:value="${pageNo+1}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <button type="submit" class="btn btn-success">Вперед</button>
+</form>
+<form th:if="${pageNo} > 0" th:action="@{/library/author}" method="get">
+    <input type="hidden" name="pageNo" th:value="${pageNo-1}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <button type="submit" class="btn btn-success">Назад</button>
+</form>
+<!--<form th:action="@{/library/author?pageNo=${pageNo-1}&pageSize=1}" method="get">-->
+<!--    <button type="submit" onclick="decreasePageNo()" class="btn btn-success">Назад</button>-->
+
+<!--</form>-->
+<script>
+    function increasePageNo() {
+        let pageNoElement = document.getElementById('pageNo');
+        let pageNo = parseInt(pageNoElement.textContent, 0);
+        pageNo++;
+        pageNoElement.textContent = pageNo;
+    }
+    function decreasePageNo() {
+        let pageNoElement = document.getElementById('pageNo');
+        let pageNo = parseInt(pageNoElement.textContent, 0);
+        pageNo--;
+        pageNoElement.textContent = pageNo;
+
+    }
+</script>
 
 
 <!--<form th:action="@{/library/author}" method="get">-->
